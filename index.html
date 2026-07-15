@@ -559,7 +559,7 @@ function wireAcc(scene,i,s){
 function qmToList(scene){var d=scene.querySelector('[data-qdetail]');if(!d)return;d.classList.remove('on');var l=scene.querySelector('[data-qlist]');if(l)l.style.display='';var ld=scene.querySelector('[data-qlead]');if(ld)ld.style.display='';}
 function wireQMaster(scene,i,s){
   var listEl=scene.querySelector('[data-qlist]'),detail=scene.querySelector('[data-qdetail]'),lead=scene.querySelector('[data-qlead]'),btns=scene.querySelectorAll('.qbtn'),keys=s.items.map(function(it){return it.k;});
-  function openI(k){var it=s.items[k];scene.querySelector('[data-qdi]').textContent=(k+1);scene.querySelector('[data-qdq]').textContent=it.q;scene.querySelector('[data-qdlist]').innerHTML=it.points.map(function(p,ix){return '<div class="ci" style="animation-delay:'+(ix*0.12)+'s"><span class="ck">'+svg('check',16)+'</span><p>'+p+'</p></div>';}).join('');listEl.style.display='none';if(lead)lead.style.display='none';detail.classList.add('on');speak(it.k,it.audio,function(){btns[k].classList.add('seen');qmToList(scene);});}
+  function openI(k){var it=s.items[k];scene.querySelector('[data-qdi]').textContent=(k+1);scene.querySelector('[data-qdq]').textContent=it.q;scene.querySelector('[data-qdlist]').innerHTML=it.points.map(function(p,ix){return '<div class="ci" style="animation-delay:'+(ix*0.12)+'s"><span class="ck">'+svg('check',16)+'</span><p>'+p+'</p></div>';}).join('');listEl.style.display='none';if(lead)lead.style.display='none';detail.classList.add('on');speak(it.k,it.audio,function(){btns[k].classList.add('seen');});}
   btns.forEach(function(b){var k=parseInt(b.dataset.qi,10);if(heard[keys[k]])b.classList.add('seen');b.addEventListener('click',function(){openI(k);});});
   scene.querySelector('[data-qback]').addEventListener('click',function(){qmToList(scene);stopPlayback();});
 }
@@ -612,7 +612,7 @@ function show(i){
   scenes[i].classList.toggle('introlock',RESTRICT&&_LK.indexOf(s.type)>=0&&!!s.audio&&!heard[s.k]&&audioUnlocked);
   if(s.type==='howto'){resetCycle(scenes[i],i);}
   else if(gateType(i)==='seq'){runSequence(scenes[i],i);}
-  if(audioUnlocked&&s.audio)play();
+  if(audioUnlocked&&s.audio&&!(s.type==='hub'&&heard[s.k]))play();
   document.getElementById('sceneLabel').textContent='Escena '+(i+1)+' de '+SLIDES.length;
   refreshMenu();refreshNav();updateOverall();scenes[i].scrollTop=0;
   if(s.type==='recursos'){if(window.SCORM){SCORM.complete();}var sm=document.getElementById('scormMsg');if(sm)sm.textContent=(window.SCORM&&SCORM.isConnected())?'✓ Progreso enviado al LMS.':'';}
