@@ -1,0 +1,60 @@
+========================================================
+  AUDIOS MP3 — Código de Conducta para Proveedores Roche
+========================================================
+
+Coloca aquí tus archivos .mp3 con EXACTAMENTE estos nombres.
+El curso los detecta y los asigna solo. Si un archivo no existe,
+esa parte usa voz sintética automáticamente (para que nunca falle).
+
+Formato recomendado: MP3, voz clara, 128 kbps.
+
+---- NARRACIÓN PRINCIPAL DE CADA PÁGINA ----
+bienvenida.mp3                 (Portada)
+como-realizar.mp3              (¿Cómo realizar esta capacitación?)
+tabla-contenido.mp3            (Tabla de Contenido)
+intro.mp3                      (Módulo 01 · Introducción)
+objetivos.mp3                  (Objetivos)
+sostenibilidad.mp3             (Compromiso con la sostenibilidad)
+proveedores.mp3                (Roche y sus proveedores)
+codigo.mp3                     (Módulo 02 · Código de Conducta)
+valores.mp3                    (Valores fundamentales)
+principios.mp3                 (Principios del Código)
+etica.mp3                      (Ética)
+derechos-humanos.mp3           (Derechos Humanos y Laborales)
+seguridad-salud.mp3            (Seguridad y Salud)
+medio-ambiente.mp3             (Medio Ambiente)
+gobernanza.mp3                 (Gobernanza y Sistemas de Gestión)
+propiedad-intelectual.mp3      (Propiedad Intelectual)
+sostenibilidad-economica.mp3   (Sostenibilidad Económica)
+cierre.mp3                     (Módulo 03 · Cierre)
+buscar-ayuda.mp3               (Buscar ayuda y comunicar inquietudes)
+consecuencias.mp3              (Consecuencias del incumplimiento)
+compromiso.mp3                 (Compromiso con Roche)
+recursos.mp3                   (Recursos)
+
+---- AUDIOS AL SELECCIONAR CADA ELEMENTO (opcionales) ----
+# Pilares de sostenibilidad
+sostenibilidad-innovacion.mp3
+sostenibilidad-personas.mp3
+sostenibilidad-ambiente.mp3
+# Roche y sus proveedores (4 preguntas)
+proveedores-1.mp3   proveedores-2.mp3   proveedores-3.mp3   proveedores-4.mp3
+# Valores (3)
+valores-cumplimiento.mp3   valores-responsabilidad.mp3   valores-transparencia.mp3
+# Temas de Ética (6)
+etica-1.mp3 ... etica-6.mp3
+# Temas de Derechos Humanos (8)
+derechos-humanos-1.mp3 ... derechos-humanos-8.mp3
+# Temas de Medio Ambiente (7)
+medio-ambiente-1.mp3 ... medio-ambiente-7.mp3
+# Buscar ayuda (2 cuadros)
+buscar-ayuda-1.mp3   buscar-ayuda-2.mp3
+
+---- RETROALIMENTACIÓN DE LOS CASOS (Verificación de la realidad) ----
+respuesta-correcta.mp3   (se usa cuando la respuesta es correcta, en los 3 casos)
+etica-feedback.mp3
+derechos-humanos-feedback.mp3
+medio-ambiente-feedback.mp3
+
+Nota: la barra de audio bloquea adelantar/retroceder la PRIMERA vez
+(debe escucharse completo). Luego ya permite navegar libremente.

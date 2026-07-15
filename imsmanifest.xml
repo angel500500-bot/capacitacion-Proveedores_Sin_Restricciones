@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="ROCHE_CoC_FULL" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata><schema>ADL SCORM</schema><schemaversion>1.2</schemaversion></metadata>
+  <organizations default="ORG1">
+    <organization identifier="ORG1">
+      <title>Código de Conducta para Proveedores de Roche</title>
+      <item identifier="ITEM1" identifierref="RES1" isvisible="true">
+        <title>Código de Conducta para Proveedores de Roche</title>
+        <adlcp:masteryscore>100</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="RES1" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="scorm.js"/>
+      <file href="audio/LEEME_AUDIOS.txt"/>
+      <file href="audio/bienvenida.mp3"/>
+      <file href="audio/como-realizar.mp3"/>
+      <file href="audio/tabla-contenido.mp3"/>
+      <file href="audio/intro.mp3"/>
+      <file href="audio/objetivos.mp3"/>
+      <file href="audio/sostenibilidad.mp3"/>
+      <file href="audio/sostenibilidad-innovacion.mp3"/>
+      <file href="audio/sostenibilidad-personas.mp3"/>
+      <file href="audio/sostenibilidad-ambiente.mp3"/>
+      <file href="audio/proveedores.mp3"/>
+      <file href="audio/proveedores-1.mp3"/>
+      <file href="audio/proveedores-2.mp3"/>
+      <file href="audio/proveedores-3.mp3"/>
+      <file href="audio/proveedores-4.mp3"/>
+      <file href="audio/codigo.mp3"/>
+      <file href="audio/valores.mp3"/>
+      <file href="audio/valores-cumplimiento.mp3"/>
+      <file href="audio/valores-responsabilidad.mp3"/>
+      <file href="audio/valores-transparencia.mp3"/>
+      <file href="audio/principios.mp3"/>
+      <file href="audio/etica.mp3"/>
+      <file href="audio/etica-caso.mp3"/>
+      <file href="audio/etica-feedback.mp3"/>
+      <file href="audio/derechos-humanos.mp3"/>
+      <file href="audio/derechos-humanos-caso.mp3"/>
+      <file href="audio/derechos-humanos-feedback.mp3"/>
+      <file href="audio/seguridad-salud.mp3"/>
+      <file href="audio/medio-ambiente.mp3"/>
+      <file href="audio/medio-ambiente-caso.mp3"/>
+      <file href="audio/medio-ambiente-feedback.mp3"/>
+      <file href="audio/gobernanza.mp3"/>
+      <file href="audio/propiedad-intelectual.mp3"/>
+      <file href="audio/sostenibilidad-economica.mp3"/>
+      <file href="audio/respuesta-correcta.mp3"/>
+      <file href="audio/cierre.mp3"/>
+      <file href="audio/buscar-ayuda.mp3"/>
+      <file href="audio/buscar-ayuda-1.mp3"/>
+      <file href="audio/buscar-ayuda-2.mp3"/>
+      <file href="audio/consecuencias.mp3"/>
+      <file href="audio/compromiso.mp3"/>
+      <file href="audio/recursos.mp3"/>
+      <file href="assets/certificado-badge.png"/>
+      <file href="assets/cover-illustration.png"/>
+      <file href="assets/derechos-humanos.jpg"/>
+      <file href="assets/etica.jpg"/>
+      <file href="assets/gobernanza.jpg"/>
+      <file href="assets/howto-cycle.png"/>
+      <file href="assets/innovacion.jpg"/>
+      <file href="assets/medio-ambiente.jpg"/>
+      <file href="assets/personas.jpg"/>
+      <file href="assets/propiedad-intelectual.jpg"/>
+      <file href="assets/proveedores.jpg"/>
+      <file href="assets/seguridad-salud.jpg"/>
+      <file href="assets/sostenibilidad-economica.jpg"/>
+      <file href="assets/sostenibilidad-planta.jpg"/>
+      <file href="assets/speakup.png"/>
+    </resource>
+  </resources>
+</manifest>

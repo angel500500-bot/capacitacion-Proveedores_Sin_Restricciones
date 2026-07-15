@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>Código de Conducta para Proveedores de Roche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<script src="scorm.js"></script>
+<style>
+  :root{
+    --ink:#122036;--muted:#586a86;--line:#e0e7f1;--paper:#eef2f8;--card:#fff;
+    --theme:#0093D0;--theme-soft:#e2f4fb;--good:#1f9d6b;--bad:#e0574f;--warn:#e0912f;
+    --shadow:0 16px 44px -22px rgba(18,32,54,.32);--r:18px;
+    --sans:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    --display:"Fraunces",Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow:hidden}
+  .app{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+  .cprog{height:4px;background:#d7e0ee;flex:0 0 auto}
+  .cprog > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--theme),#7fd3ff);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+  .topmenu{display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--line);flex:0 0 auto;position:relative;z-index:5}
+  .brandmini{display:flex;align-items:center;gap:9px;padding:8px 16px;border-right:1px solid var(--line);flex:0 0 auto}
+  .brandmini .m{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#1c5dd1,#1547a6);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:17px}
+  .brandmini b{font-size:12.5px;line-height:1.1;color:var(--ink)} .brandmini small{display:block;font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  .mitems{display:flex;flex:1;min-width:0}
+  .mitem{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:13px 10px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;position:relative;border-right:1px solid var(--line);transition:color .2s,background .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mitem:last-child{border-right:none}
+  .mitem .mc{width:19px;height:19px;border-radius:50%;border:2px solid #c7d3e6;display:grid;place-items:center;flex:0 0 auto;transition:.2s}
+  .mitem .mc svg{width:11px;height:11px;opacity:0;color:#fff;transition:.2s}
+  .mitem.done .mc{background:var(--good);border-color:var(--good)} .mitem.done .mc svg{opacity:1}
+  .mitem.active{color:#fff} .mitem.active::before{content:"";position:absolute;inset:6px 6px;border-radius:9px;background:var(--am);z-index:-1}
+  .mitem.active .mc{border-color:rgba(255,255,255,.8)} .mitem.active.done .mc{background:#fff;border-color:#fff} .mitem.active.done .mc svg{color:var(--am)}
+  .mitem.locked{cursor:not-allowed;color:#aeb9ca} .mitem.locked .lock{display:inline-flex} .mitem .lock{display:none;color:#aeb9ca}
+  .mitem.nav:not(.locked):not(.active):hover{background:#f4f7fc;color:var(--ink)}
+  .band{height:8px;background:linear-gradient(90deg,var(--theme),color-mix(in srgb,var(--theme) 55%,#fff));flex:0 0 auto;transition:background .35s}
+  .stage{flex:1 1 auto;position:relative;min-height:0}
+  .scene{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .38s,transform .38s}
+  .scene.active{opacity:1;visibility:visible;transform:none}
+  .panel{margin:0 auto;width:100%;max-width:1120px;min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:12px clamp(14px,2.6vw,30px) 16px;position:relative;z-index:1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+  .pad{padding:clamp(14px,2vw,24px) clamp(18px,2.4vw,34px)}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--theme);background:var(--theme-soft);padding:7px 13px;border-radius:99px;margin-bottom:14px}
+  h1.t{font-family:var(--display);font-weight:600;font-size:clamp(27px,3.4vw,42px);line-height:1.06;margin:.08em 0;letter-spacing:-.01em}
+  h2.t{font-family:var(--display);font-weight:600;font-size:clamp(23px,2.9vw,34px);line-height:1.1;margin:.05em 0}
+  .tbar{width:60px;height:5px;border-radius:99px;background:var(--theme);margin:10px 0 14px}
+  .lead{font-size:clamp(15.5px,1.55vw,18px);color:var(--muted);line-height:1.62;max-width:66ch}
+  p.body{font-size:clamp(15px,1.5vw,17px);line-height:1.72;color:#33415c;max-width:66ch}
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(16px,2.4vw,26px);align-items:center}
+  .split.rev{grid-template-columns:.95fr 1.05fr}
+  .media{position:relative;border-radius:16px;overflow:hidden;min-height:clamp(160px,30vh,270px);background:linear-gradient(140deg,var(--theme),color-mix(in srgb,var(--theme) 40%,#0a2540));box-shadow:var(--shadow);display:flex;align-self:stretch}
+  .media img{width:100%;height:100%;object-fit:cover;display:block}
+  .media .phlabel{display:none;position:absolute;inset:0;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:12px;font-weight:700;padding:16px}
+  .media.noimg img{display:none}.media.noimg{align-items:center;justify-content:center}.media.noimg .phlabel{display:flex;flex-direction:column;gap:6px}.media.noimg .phlabel::before{content:"🖼";font-size:26px}
+  .hero{background:linear-gradient(155deg,#13284b,#0c1b33);color:#fff}
+  .hero .kicker{background:rgba(255,255,255,.12);color:#cfe0ff}
+  .hero h1.t,.hero h2.t{color:#fff}.hero .lead{color:#c9d8f2}
+  .hero .media{min-height:clamp(170px,28vh,270px)}
+  .hero .media.contain{background:transparent;box-shadow:none}.hero .media.contain img{object-fit:contain}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:7px 13px;border-radius:99px;font-weight:600;font-size:13.5px}
+  .chip svg{width:15px;height:15px;color:#7fd3ff}
+  .seq{display:grid;gap:13px}
+  .obj{display:flex;gap:13px;align-items:flex-start;opacity:0;transform:translateX(-8px);transition:.5s;padding:2px 0}
+  .obj.in{opacity:1;transform:none}
+  .obj .ic{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--theme-soft);color:var(--theme);display:grid;place-items:center;margin-top:1px}
+  .obj .ic svg{width:16px;height:16px}.obj p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.55}
+  .obj p strong{color:var(--ink);font-weight:800}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pill{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:clamp(200px,32vh,290px);cursor:pointer;box-shadow:var(--shadow);background:#0c1b33}
+  .pill .pf{position:absolute;inset:0;transition:opacity .5s}
+  .pill .pf img{width:100%;height:100%;object-fit:cover}
+  .pill .pf .lab{position:absolute;left:0;right:0;bottom:0;padding:16px 16px 18px;background:linear-gradient(transparent,rgba(6,16,33,.35),rgba(6,16,33,.9));color:#fff;font-weight:800;font-size:clamp(16px,1.8vw,20px);display:flex;align-items:center;gap:9px}
+  .pill .pf .hintclick{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:#13284b;font-size:11px;font-weight:800;padding:6px 10px;border-radius:99px}
+  .pill .pb{position:absolute;inset:0;padding:clamp(18px,2.4vw,26px);background:var(--card);opacity:0;visibility:hidden;transition:opacity .5s;display:flex;flex-direction:column;justify-content:center}
+  .pill.open .pf{opacity:0;visibility:hidden}
+  .pill.open .pb{opacity:1;visibility:visible}
+  .pill .pb .badge{width:44px;height:44px;border-radius:12px;background:var(--theme);color:#fff;display:grid;place-items:center;margin-bottom:12px}
+  .pill .pb h3{margin:0 0 8px;font-size:clamp(17px,1.9vw,21px)}
+  .pill .pb p{margin:0;font-size:clamp(14px,1.45vw,16px);line-height:1.55;color:#41506b}
+  .pill .pb .re{margin-top:14px;font-size:12.5px;color:var(--muted);font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+  .pill .dtick{position:absolute;top:12px;left:12px;width:24px;height:24px;border-radius:50%;background:var(--good);color:#fff;display:none;place-items:center;z-index:3}
+  .pill.done .dtick{display:grid}.pill .dtick svg{width:14px;height:14px}
+  .acc{display:grid;gap:8px}
+  .qrow{border:1px solid var(--line);border-radius:13px;background:var(--card);overflow:hidden}
+  .qrow .head{display:flex;align-items:center;gap:13px;padding:11px 16px;cursor:pointer;font-weight:700;font-size:clamp(14px,1.5vw,16px)}
+  .qrow .head .q{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--theme-soft);color:var(--theme);display:grid;place-items:center;font-size:13px;font-weight:800}
+  .qrow .head .chev{margin-left:auto;color:var(--muted);transition:transform .3s}
+  .qrow .body{max-height:0;overflow:hidden;transition:max-height .4s;background:#fbfdff}
+  .qrow .body .inner{padding:2px 16px 12px 56px;font-size:clamp(13.5px,1.45vw,15.5px);color:#41506b;line-height:1.6}
+  .qrow.open{border-color:var(--theme)} .qrow.open .head .q{background:var(--theme);color:#fff}
+  .qrow.open .head .chev{transform:rotate(180deg)}.qrow.open .body{max-height:460px}
+  .qlist{display:grid;gap:12px}
+  .qbtn{display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:13px;padding:13px 16px;cursor:pointer;font-weight:700;font-size:clamp(14.5px,1.55vw,16.5px);background:#fff;transition:.16s;text-align:left;width:100%}
+  .qbtn:hover{border-color:var(--theme);background:#f8fbff;transform:translateX(3px)}
+  .qbtn .qi{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--theme-soft);color:var(--theme);display:grid;place-items:center;font-weight:800;font-size:14px}
+  .qbtn .qck{margin-left:auto;width:21px;height:21px;border-radius:50%;border:1.5px solid #c7d3e6;display:grid;place-items:center;flex:0 0 auto}
+  .qbtn.seen .qck{background:var(--good);border-color:var(--good)} .qbtn .qck svg{width:12px;height:12px;color:#fff;opacity:0}.qbtn.seen .qck svg{opacity:1}
+  .qbtn .chev2{color:var(--muted)}
+  .qdetail{display:none}.qdetail.on{display:block;animation:slideUp .4s ease}
+  @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .qback{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:700;font-size:13.5px;border-radius:9px;padding:9px 14px;cursor:pointer}
+  .qbackwrap{display:flex;justify-content:flex-end;margin-top:16px}
+  .qback:hover{border-color:var(--theme);color:var(--ink)}
+  .qdetail .qtitle{display:flex;align-items:center;gap:13px;font-family:var(--display);font-weight:600;font-size:clamp(19px,2.3vw,26px);color:var(--ink);padding:15px 17px;background:var(--theme-soft);border-radius:13px;margin-bottom:18px}
+  .qdetail .qtitle .qi{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--theme);color:#fff;display:grid;place-items:center;font-weight:800}
+  .checklist{display:grid;gap:12px}
+  .checklist .ci{display:flex;gap:13px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;opacity:0;transform:translateX(-8px);animation:ciIn .45s forwards}
+  .checklist .ci .ck{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--good);color:#fff;display:grid;place-items:center}
+  .checklist .ci .ck svg{width:16px;height:16px}.checklist .ci p{margin:0;font-size:clamp(15px,1.55vw,17px);line-height:1.5}
+  @keyframes ciIn{to{opacity:1;transform:none}}
+  .vmaster{display:grid;grid-template-columns:0.7fr 1.3fr;gap:clamp(18px,2.6vw,26px);align-items:start}
+  .scene.introlock .pill,.scene.introlock .qbtn,.scene.introlock .vbtn,.scene.introlock .qrow .head,.scene.introlock .helpcard,.scene.introlock .opt,.scene.introlock [data-submit],.scene.introlock .hubcard{pointer-events:none;opacity:.5;filter:grayscale(.25);cursor:default}
+  .vcontent{border:1px solid var(--line);border-radius:16px;background:#fbfdff;padding:clamp(20px,2.6vw,28px);min-height:clamp(240px,40vh,300px)}
+  .vcontent .vph{color:var(--muted);font-size:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:12px}
+  .vcontent .vph .vphic{width:56px;height:56px;border-radius:15px;background:var(--theme);color:#fff;display:grid;place-items:center}
+  .vcontent h3{margin:0 0 14px;font-family:var(--display);font-weight:600;font-size:clamp(20px,2.3vw,25px);color:var(--ink);display:flex;align-items:center;gap:11px}
+  .vcontent h3 .vi{width:38px;height:38px;border-radius:10px;background:var(--theme);color:#fff;display:grid;place-items:center;flex:0 0 auto}
+  .vcontent p{margin:0 0 11px;font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.62;color:#33415c}
+  .vcontent.fade{animation:fadeIn .35s}
+  @keyframes fadeIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+  .vlist{display:grid;gap:12px}
+  .vbtn{display:flex;align-items:center;gap:13px;border:1.5px solid var(--line);border-radius:13px;padding:13px 15px;cursor:pointer;font-weight:700;font-size:clamp(14.5px,1.55vw,16.5px);background:#fff;transition:.18s;text-align:left}
+  .vbtn:hover{border-color:var(--theme);transform:translateX(-4px)}
+  .vbtn.active{border-color:var(--theme);background:var(--theme-soft);transform:translateX(-8px);box-shadow:var(--shadow)}
+  .vbtn .vic{flex:0 0 auto;width:38px;height:38px;border-radius:11px;background:var(--theme-soft);color:var(--theme);display:grid;place-items:center}
+  .vbtn.active .vic{background:var(--theme);color:#fff}
+  .vbtn .vck{margin-left:auto;width:21px;height:21px;border-radius:50%;border:1.5px solid #c7d3e6;display:grid;place-items:center;flex:0 0 auto}
+  .vbtn.seen .vck{background:var(--good);border-color:var(--good)}.vbtn .vck svg{width:12px;height:12px;color:#fff;opacity:0}.vbtn.seen .vck svg{opacity:1}
+  .hubgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .hubcard{border:1.5px solid var(--line);border-radius:15px;background:#fff;cursor:pointer;padding:17px 18px;display:flex;align-items:center;gap:15px;transition:.18s;position:relative;text-align:left}
+  .hubcard:hover{border-color:var(--theme);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .hubcard .hic{flex:0 0 auto;width:48px;height:48px;border-radius:13px;background:var(--theme);color:#fff;display:grid;place-items:center}
+  .hubcard h3{margin:0 0 3px;font-size:clamp(15px,1.6vw,17px)}.hubcard p{margin:0;font-size:clamp(12.5px,1.35vw,14px);color:var(--muted);line-height:1.4}
+  .hubcard .hgo{margin-left:auto;color:var(--theme);flex:0 0 auto;transition:transform .2s}.hubcard:hover .hgo{transform:translateX(3px)}
+  .hubcard .hck{position:absolute;top:11px;right:11px;width:23px;height:23px;border-radius:50%;background:var(--good);color:#fff;display:none;place-items:center}
+  .hubcard.done .hck{display:grid}.hubcard.done .hgo{display:none}.hubcard .hck svg{width:13px;height:13px}
+  .hubcard.done{border-color:color-mix(in srgb,var(--good) 40%,var(--line));background:#f4fbf7}
+  .hubnote{margin-top:18px;font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}.hubnote b{color:var(--ink)}
+  .cycle{position:relative;margin:4px auto 0;max-width:660px}.cycle svg{width:100%;height:auto;display:block;overflow:visible}
+  .cnode{opacity:0;transition:opacity .55s}.cnode.in{opacity:1}
+  .carrow{opacity:0;stroke-dasharray:560;stroke-dashoffset:560;transition:opacity .3s,stroke-dashoffset 1s ease}.carrow.in{opacity:1;stroke-dashoffset:0}
+  .cyc-cap{font-size:13.5px;color:#33415c;line-height:1.45}.cyc-cap b{color:var(--ink)}
+  .scnbox{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .scnhead{background:var(--theme);color:#fff;padding:12px 18px;font-weight:800;font-size:13px;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:9px}.scnhead svg{width:17px;height:17px}
+  .scngrid{display:grid;grid-template-columns:1fr 1fr}
+  .scngrid .sit{padding:18px 20px;font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.58;color:#33415c;border-right:1px solid var(--line)}
+  .scngrid .ans{padding:16px 20px}.scngrid .qn{font-weight:800;font-size:clamp(15px,1.55vw,17px);margin-bottom:12px}
+  .opts{display:grid;gap:9px}
+  .opt{display:flex;gap:11px;align-items:flex-start;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;cursor:pointer;font-size:clamp(14px,1.5vw,15.5px);transition:.15s;background:#fff}
+  .opt:hover{border-color:color-mix(in srgb,var(--theme) 45%,var(--line));background:#f8fbff}
+  .opt .k{flex:0 0 auto;width:25px;height:25px;border-radius:50%;border:1.5px solid #c3d3ec;font-weight:800;font-size:12.5px;display:grid;place-items:center;color:var(--muted)}
+  .opt.sel{border-color:var(--theme);background:var(--theme-soft)}.opt.sel .k{background:var(--theme);color:#fff;border-color:var(--theme)}
+  .opt.correct{border-color:var(--good);background:#effaf4}.opt.correct .k{background:var(--good);border-color:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:#fdf1f0}.opt.wrong .k{background:var(--bad);border-color:var(--bad);color:#fff}
+  .opt.locked{pointer-events:none}
+  .fbstatus{margin-top:14px;display:none;align-items:center;gap:8px;font-weight:700;font-size:clamp(14px,1.5vw,16px)}
+  .fbstatus.show{display:flex}
+  .fbstatus.ok{color:var(--good)}.fbstatus.no{color:var(--bad)}
+  .fbstatus .fsi{flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:#fff}
+  .fbstatus.ok .fsi{background:var(--good)}.fbstatus.no .fsi{background:var(--bad)}.fbstatus .fsi svg{width:13px;height:13px}
+  .fb{margin-top:14px;border-radius:13px;padding:15px 16px;display:none;font-size:clamp(14px,1.5vw,16px);line-height:1.55;gap:13px;align-items:flex-start}
+  .fb.show{display:flex}
+  .fb.ok{background:#effaf4;border:1px solid #bde9d1;color:#1a6b48}.fb.no{background:#fdf1f0;border:1px solid #f2c3bf;color:#a23a32}
+  .fb .fbi{flex:0 0 auto;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff}
+  .fb.ok .fbi{background:var(--good)}.fb.no .fbi{background:var(--bad)}.fb .fbi svg{width:22px;height:22px}
+  .fb b{display:block;margin-bottom:4px;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+  .helpgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .helpcard{border:1.5px solid var(--line);border-radius:15px;background:#fff;padding:0;overflow:hidden;cursor:pointer;transition:.18s;position:relative}
+  .helpcard:hover{border-color:var(--theme);box-shadow:var(--shadow)}
+  .helpcard .hh{display:flex;align-items:center;gap:12px;padding:15px 17px;font-weight:800;font-size:clamp(15px,1.6vw,17px);background:var(--theme);color:#fff}
+  .helpcard .hh .hhi{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.2);display:grid;place-items:center;flex:0 0 auto}
+  .helpcard .hbody{max-height:0;overflow:hidden;transition:max-height .45s}
+  .helpcard.open .hbody{max-height:360px}
+  .helpcard .hin{padding:15px 18px}
+  .helpcard .hin ul{margin:0;padding-left:20px;display:grid;gap:8px}.helpcard .hin li{font-size:clamp(14px,1.45vw,15.5px);line-height:1.5;color:#41506b}
+  .helpcard .hh .hhck{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.6);display:grid;place-items:center}
+  .helpcard.open .hh .hhck{background:#fff}.helpcard .hh .hhck svg{width:12px;height:12px;color:var(--theme);opacity:0}.helpcard.open .hh .hhck svg{opacity:1}
+  .helpteaser{font-size:12px;color:var(--muted);font-weight:700;padding:12px 18px}
+  .helpcard.open .helpteaser{display:none}
+  .conseq{display:grid;gap:14px}
+  .conrow{display:flex;gap:16px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:18px 20px;background:#fff;opacity:0;transform:translateY(12px);transition:.5s}
+  .conrow.in{opacity:1;transform:none}
+  .conrow .cic{flex:0 0 auto;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff}
+  .conrow.warn .cic{background:var(--warn)}.conrow.stop .cic{background:var(--bad)}
+  .conrow .cic svg{width:30px;height:30px}
+  .conrow p{margin:0;font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.55;color:#33415c}
+  .commit-intro{font-size:clamp(16px,1.7vw,19px);font-weight:800;color:var(--ink);line-height:1.4;margin-bottom:18px}
+  .commit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .commit-card{display:flex;gap:15px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:16px;background:#fbfdff}
+  .commit-card .cim{flex:0 0 auto;width:88px;height:88px;border-radius:12px;overflow:hidden;background:var(--theme-soft)}
+  .commit-card .cim img{width:100%;height:100%;object-fit:cover}
+  .commit-card p{margin:0;font-size:clamp(14px,1.45vw,16px);line-height:1.55;color:#41506b}
+  .commit-thanks{margin-top:20px;text-align:center;font-family:var(--display);font-weight:600;font-size:clamp(18px,2vw,24px);color:var(--theme)}
+  .resgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:center}
+  .reslist{display:grid;gap:11px}
+  .reslink{display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:12px;padding:15px 16px;text-decoration:none;color:var(--ink);font-weight:700;font-size:clamp(14px,1.5vw,16px);transition:.15s;background:#fff}
+  .reslink:hover{border-color:var(--theme);background:#f8fbff}
+  .reslink .ic{width:36px;height:36px;border-radius:10px;background:var(--theme-soft);color:var(--theme);display:grid;place-items:center;flex:0 0 auto}.reslink .ic svg{width:18px;height:18px}.reslink small{display:block;color:var(--muted);font-weight:500;font-size:12.5px}.reslink .go{margin-left:auto;color:var(--muted)}
+  .certcard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;border:1px dashed color-mix(in srgb,var(--theme) 50%,var(--line));border-radius:16px;padding:22px;background:var(--theme-soft)}
+  .certcard img{width:92px;height:92px;object-fit:contain}
+  .btn{border:none;cursor:pointer;font-family:inherit;font-weight:800;border-radius:12px;padding:12px 22px;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;transition:transform .12s,box-shadow .2s,opacity .2s}
+  .btn svg{width:16px;height:16px}
+  .btn.primary{background:var(--theme);color:#fff;box-shadow:0 10px 22px -12px var(--theme)}.btn.primary:hover{transform:translateY(-1px)}
+  .btn.good{background:var(--good);color:#fff}
+  .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}.btn.ghost:hover{color:var(--ink);border-color:#bcd0ea}
+  .btn[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+  .bottom{flex:0 0 auto;background:var(--card);border-top:1px solid var(--line);z-index:6}
+  .transcript{display:none;padding:11px clamp(14px,3vw,26px) 0;font-size:clamp(13px,1.4vw,15px);line-height:1.55;color:#33415c;max-height:78px;overflow:auto}
+  .transcript.on{display:block}
+  .transcript .w{transition:background .1s,color .1s;border-radius:3px;padding:0 1px}.transcript .w.act{background:var(--theme);color:#fff}
+  .transcript .lbl{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .player{display:flex;align-items:center;gap:12px;padding:10px clamp(14px,3vw,26px)}
+  .pbtn{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:var(--theme);color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px -8px var(--theme);transition:transform .12s}
+  .pbtn:hover{transform:scale(1.06)}.pbtn svg{width:19px;height:19px}.pbtn[disabled]{opacity:.5;cursor:wait;box-shadow:none;transform:none}
+  .lockbadge{display:none;align-items:center;gap:5px;color:var(--muted);font-size:11px;font-weight:700;flex:0 0 auto}
+  .lockbadge.show{display:inline-flex}.lockbadge svg{width:14px;height:14px}
+  .time{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:var(--muted);min-width:34px;text-align:center}
+  .seek{flex:1;height:7px;border-radius:99px;background:#dde6f3;position:relative;cursor:pointer;min-width:70px}
+  .seek > i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;background:var(--theme)}
+  .seek .knob{position:absolute;top:50%;left:0;width:15px;height:15px;border-radius:50%;background:#fff;border:2px solid var(--theme);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+  .seek.locked{cursor:not-allowed;opacity:.7}.seek.locked .knob{border-color:#9fb0c9}.seek.locked > i{background:#9fb0c9}
+  .vol-wrap{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+  .vbtn{background:none;border:none;cursor:pointer;color:var(--muted);display:grid;place-items:center;padding:2px}.vbtn svg{width:19px;height:19px}
+  .vol{width:76px;accent-color:var(--theme);cursor:pointer}
+  .ccbtn{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;color:var(--muted);font-weight:800;font-size:11px;border-radius:8px;padding:8px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s}
+  .ccbtn.on{background:var(--theme);border-color:var(--theme);color:#fff}.ccbtn svg{width:15px;height:15px}
+  .navrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(14px,3vw,26px) 12px}
+  .navrow .left{font-size:12px;color:var(--muted);font-weight:700}
+  .hint{font-size:12px;color:#c9820b;font-weight:800;display:none;align-items:center;gap:6px}.hint.show{display:inline-flex}.hint svg{width:14px;height:14px}
+  @media (max-width:880px){
+    .brandmini{display:none}
+    .mitem{font-size:0;gap:0;padding:12px 6px}.mitem .lbltxt{display:none}.mitem .mabbr{display:inline;font-size:13px}
+    .split,.split.rev,.pillars,.scngrid,.vmaster,.hubgrid,.helpgrid,.commit-grid,.resgrid{grid-template-columns:1fr}
+    .scngrid .sit{border-right:none;border-bottom:1px solid var(--line)}
+    .media{min-height:180px}.vol{width:56px}.player{gap:8px;flex-wrap:wrap}
+    .commit-card .cim{width:64px;height:64px}
+  }
+  .mabbr{display:none}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="cprog"><i id="cprogFill"></i></div>
+  <div class="topmenu">
+    <div class="brandmini"><span class="m">R</span><span><small>Capacitación</small><b>Código de Conducta<br>Proveedores</b></span></div>
+    <div class="mitems" id="mitems"></div>
+  </div>
+  <div class="band" id="band"></div>
+  <div class="stage" id="stage"></div>
+  <div class="bottom">
+    <div class="transcript" id="transcript"><span class="lbl">Transcripción</span><span id="transcriptText"></span></div>
+    <div class="player">
+      <button class="pbtn" id="playBtn" aria-label="Reproducir" disabled></button>
+      <span class="lockbadge" id="lockBadge" title="La primera vez debes escuchar el audio completo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>1ª vez</span>
+      <span class="time" id="tCur">0:00</span>
+      <div class="seek" id="seek"><i id="seekFill"></i><span class="knob" id="knob"></span></div>
+      <span class="time" id="tTot">0:00</span>
+      <div class="vol-wrap"><button class="vbtn" id="volBtn" aria-label="Volumen"></button><input type="range" class="vol" id="vol" min="0" max="100" value="100"></div>
+      <button class="ccbtn" id="ccBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M8 10.5a2 2 0 1 0 0 3M16 10.5a2 2 0 1 0 0 3"/></svg> CC</button>
+    </div>
+    <div class="navrow">
+      <span class="left" id="sceneLabel"></span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg> <span id="hintTxt"></span></span>
+        <button class="btn ghost" id="prevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"/></svg> Anterior</button>
+        <button class="btn primary" id="nextBtn">Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+"use strict";
+var TH={gen:{c:"#5b6b85",s:"#eef2f8"},intro:{c:"#0093D0",s:"#e2f4fb"},cod:{c:"#5FA83D",s:"#eef7e6"},cierre:{c:"#7B3F8F",s:"#f3ebf6"}};
+var MENU=[{key:"toc",mod:"gen",full:"Tabla de Contenido",abbr:"TC"},{key:"intro",mod:"intro",full:"Introducción",abbr:"I"},{key:"cod",mod:"cod",full:"Código de Conducta",abbr:"CC"},{key:"cierre",mod:"cierre",full:"Cierre",abbr:"F"}];
+var MODSECS={intro:["obj","sost","prov"],cod:["val","prin"],cierre:["ayuda","cons","comp","rec"]};
+var ETICA=[["Antisoborno y anticorrupción","No ofrecer, entregar, solicitar ni aceptar sobornos o cualquier beneficio indebido."],["Competencia leal","Competir de manera justa y no participar en prácticas comerciales ilegales."],["Bienestar animal","Cuando sea necesario utilizar animales, deberán ser tratados con respeto, minimizando el dolor y el estrés."],["Privacidad","Proteger la información confidencial de Roche, de sus colaboradores y de sus pacientes."],["Prevención de conflictos de interés","Identificar, prevenir y gestionar los conflictos de interés e informar a Roche cuando exista un conflicto real o potencial."],["Protección del producto","Contar con sistemas para proteger los productos, componentes e ingredientes contra robo, falsificación y adulteración."]];
+var DDHH=[["Empleo de libre elección","Garantizar que todo trabajo sea voluntario y que los trabajadores no paguen por obtener un empleo. No utilizar trabajo forzoso, trabajo por servidumbre ni ninguna forma de esclavitud moderna."],["Trabajo infantil y trabajadores jóvenes","No utilizar trabajo infantil. La contratación de trabajadores jóvenes (menores de 18 años) solo está permitida para trabajos seguros y no peligrosos, siempre que hayan alcanzado la edad mínima legal para trabajar o hayan concluido la educación obligatoria."],["No discriminación","Tratar a todos los trabajadores de manera justa y proporcionar un ambiente de trabajo libre de discriminación."],["Trato justo","Garantizar que el ambiente de trabajo esté libre de acoso, trato severo e inhumano."],["Salarios, beneficios y horas de trabajo","Pagar a los trabajadores de manera justa, incluyendo el salario mínimo, las horas extras, los beneficios y los pagos oportunos."],["Libertad de asociación y negociación colectiva","Respetar el derecho de los trabajadores a afiliarse a un sindicato y a negociar colectivamente."],["Comunidades locales e indígenas","Respetar los derechos de las comunidades locales, incluido el derecho a un ambiente limpio y saludable."],["Abastecimiento responsable de minerales y metales","Utilizar e importar únicamente minerales y metales provenientes de fuentes responsables."]];
+var MAMB=[["Cumplimiento ambiental","Cumplir toda la legislación ambiental aplicable y obtener los permisos y licencias necesarios."],["Gestión de residuos y emisiones","Gestionar, controlar y tratar adecuadamente los residuos, las aguas residuales y las emisiones para prevenir daños al medio ambiente."],["Cambio climático","Evaluar y reportar sus emisiones de gases de efecto invernadero y establecer metas de reducción de emisiones alineadas con la trayectoria de 1,5 °C (conforme al Acuerdo de París). Asimismo, fijar metas para reducir los residuos y el consumo de energía, y esforzarse por una transición hacia fuentes de energía renovable."],["Eficiencia en el uso de recursos","Reducir el consumo de recursos como el agua y la energía, reutilizando y reciclando materiales para una economía más circular."],["Conservación de la biodiversidad","Conservar la biodiversidad mediante el uso responsable de los recursos naturales y el cumplimiento de la normativa ambiental, asegurando que las operaciones no contribuyan a la deforestación."],["Prevención de derrames y liberaciones","Contar con sistemas eficaces para prevenir, controlar, mitigar y comunicar derrames o liberaciones accidentales al medio ambiente."],["Materiales peligrosos","Evitar el uso de sustancias prohibidas y eliminar progresivamente, de manera activa, las sustancias altamente preocupantes (SVHC) y las sustancias perfluoroalquiladas y polifluoroalquiladas (PFAS). Ayudar a Roche proporcionando declaraciones precisas y conformes."]];
+function accFrom(a,base){return a.map(function(t,i){return {q:t[0],a:t[1],k:base+'-'+(i+1)};});}
+var A={
+ howtoSeq:"Observa la secuencia: primero Aprende, luego Analiza y finalmente Decide.",
+ bienvenida:"Bienvenido a la autoformación sobre el Código de Conducta para Proveedores de Roche. Esta capacitación ha sido desarrollada por la Organización para fortalecer el cumplimiento de los compromisos asumidos como proveedor de Roche. Durante los próximos minutos conocerás los principios y comportamientos que Roche espera de cada uno de nosotros. Asimismo, te ayudará a identificar situaciones que pueden presentarse durante tu trabajo y a tomar decisiones alineadas con los valores de Roche y de nuestra Organización. Cuando estés listo, inicia la capacitación.",
+ howto:"Antes de comenzar, es importante conocer cómo se desarrollará esta capacitación. Durante el curso encontrarás principios, recomendaciones y situaciones basadas en casos que podrían presentarse en la prestación de servicios para Roche. Analiza cada situación antes de responder y reflexiona sobre cuál sería la mejor decisión.",
+ toc:"Este es el índice del curso. En el menú superior verás tu avance: cada módulo se marca con un check al completarlo.",
+ introDiv:"En este módulo conocerás por qué Roche cuenta con un Código de Conducta para Proveedores y la importancia de cumplirlo durante la prestación de servicios.",
+ objetivos:"Al finalizar esta capacitación, comprenderás por qué Roche establece un Código de Conducta para sus proveedores. Identificarás los principios y comportamientos esperados durante la prestación de servicios para Roche. Aplicarás estos principios para actuar correctamente frente a las situaciones que puedan presentarse en el desarrollo de tus funciones. Estos conocimientos contribuirán a que desempeñes tus funciones con integridad, responsabilidad y de acuerdo con las expectativas establecidas por Roche.",
+ sost:"Roche está comprometida con la sostenibilidad en todas sus actividades y espera que sus proveedores compartan ese mismo compromiso. Como proveedor, desempeñamos un papel importante para contribuir al crecimiento sostenible de Roche, actuando con responsabilidad, integridad y altos estándares de comportamiento. A continuación, te invitamos a conocer los tres compromisos que reflejan este enfoque y que constituyen la base de las expectativas establecidas para sus proveedores. Haz clic en cada compromiso para conocer su contenido.",
+ sInnov:"Innovación. Contribuir al desarrollo de soluciones que mejoren la salud y la calidad de vida de las personas.",
+ sPers:"Personas. Promover un entorno donde todas las personas sean tratadas con respeto, equidad y dignidad.",
+ sAmb:"Medio Ambiente. Desarrollar actividades de manera responsable, protegiendo el medio ambiente y usando los recursos de forma sostenible.",
+ prov:"La relación de Roche con sus proveedores va más allá de una relación comercial. Roche considera que sus proveedores son aliados fundamentales para alcanzar un crecimiento sostenible y generar un impacto positivo en la sociedad. A continuación, te invitamos a explorar cuatro preguntas que te ayudarán a comprender esta relación y las expectativas que Roche establece para sus proveedores. Selecciona cada pregunta para continuar.",
+ q1:"Roche considera como proveedores a las empresas que suministran bienes, prestan servicios o actúan como fabricantes por contrato. Todas ellas forman parte de su cadena de suministro y deben cumplir los principios establecidos en este Código de Conducta.",
+ q2:"Nuestra colaboración contribuye a un negocio más eficiente y sostenible, y a que Roche pueda ofrecer innovaciones médicas que beneficien a los pacientes y a la sociedad.",
+ q3:"Roche espera que todos sus proveedores cumplan las expectativas y principios establecidos en su Código de Conducta. Este compromiso forma parte de la relación comercial y constituye un requisito para mantener una colaboración responsable y sostenible.",
+ q4:"Cumplir este Código te permitirá comprender las expectativas de Roche, contribuir a proteger la reputación de nuestra organización y fortalecer la relación comercial que mantenemos como proveedor de Roche.",
+ codDiv:"Hasta este momento, conociste el propósito del Código de Conducta para Proveedores de Roche, el compromiso de Roche con la sostenibilidad y la importancia de la colaboración con sus proveedores. A continuación, en este módulo, conocerás los valores fundamentales y los principios que orientan el comportamiento esperado de los proveedores que forman parte de su cadena de suministro.",
+ valores:"Los valores fundamentales de Roche son Cumplimiento, Responsabilidad y Transparencia. Selecciona cada uno para conocer su significado e importancia.",
+ vCumpl:"El cumplimiento del Código de Conducta para Proveedores forma parte de los compromisos asumidos entre Roche y nuestra Organización y constituye un requisito para participar en el Proyecto Roche. Todos los colaboradores que desarrollan actividades para este proyecto deben actuar conforme a estos principios. Los incumplimientos deben ser corregidos oportunamente y, cuando sean graves, pueden afectar la continuidad de la relación comercial entre Roche y nuestra Organización.",
+ vResp:"Nuestra Organización debe promover el cumplimiento de los principios del Código de Conducta para Proveedores de Roche a lo largo de su cadena de suministro. Esto implica que, cuando corresponda, nuestros proveedores y socios comerciales también desarrollen sus actividades de acuerdo con estos principios.",
+ vTrans:"Nuestra Organización debe mantener la información y los registros necesarios para demostrar el cumplimiento del Código de Conducta para Proveedores de Roche. Cuando corresponda, Roche podrá verificar este cumplimiento mediante auditorías, evaluaciones u otros mecanismos establecidos para este fin.",
+ principios:"El Código de Conducta para Proveedores de Roche se desarrolla a través de siete principios fundamentales. Cada uno de ellos establece expectativas específicas sobre la forma en que debemos desarrollar nuestras actividades. En las siguientes secciones, revisaremos cada principio y analizaremos situaciones prácticas relacionadas con ellos. Selecciona cada principio para conocer su alcance.",
+ etica:"Actuar con ética significa desarrollar nuestras actividades con integridad, transparencia y respeto por las normas aplicables. Este principio comprende seis temas fundamentales. Selecciona cada tema para conocer su alcance.",
+ ddhh:"Respetar los derechos humanos y laborales significa promover un entorno de trabajo digno, seguro, inclusivo y respetuoso. Este principio comprende ocho temas fundamentales. Selecciona cada tema para conocer su alcance.",
+ seguridad:"Roche espera que sus proveedores proporcionen un entorno de trabajo seguro y saludable para todas las personas. Esto implica mantener condiciones de trabajo seguras, proteger la salud y el bienestar de los trabajadores, gestionar adecuadamente los riesgos asociados a los procesos y contar con planes eficaces de preparación y respuesta ante situaciones de emergencia.",
+ mamb:"Roche promueve un compromiso ambiental verificable y de mejora continua. Este principio comprende siete temas. Selecciona cada tema para conocer su alcance.",
+ gobernanza:"Roche espera que sus proveedores cuenten con sistemas de gestión que permitan implementar estos principios de manera consistente: cultura de cumplimiento, gestión preventiva de riesgos, procesos transparentes y trazables, capacitación del personal, mejora continua y reporte oportuno de incumplimientos.",
+ propiedad:"Roche espera que todos sus proveedores respeten los derechos de propiedad intelectual asociados a sus productos, tecnologías, procesos, marcas y demás activos intangibles. Asimismo, toda la información confidencial y los secretos comerciales a los que se tenga acceso durante la relación comercial deben protegerse adecuadamente y utilizarse únicamente para los fines autorizados. El uso, la divulgación o la reproducción no autorizados de esta información pueden afectar la confianza entre las partes y generar responsabilidades legales y contractuales.",
+ sosteco:"Roche espera que sus proveedores contribuyan al desarrollo sostenible de las comunidades donde operan. Esto implica desarrollar las actividades empresariales de manera responsable, generando valor económico y social y manteniendo una relación positiva con las comunidades en las que participan. La sostenibilidad no solo comprende el desempeño económico de la empresa, sino también el impacto que sus actividades generan en las personas y en su entorno.",
+ cierreDiv:"Hasta aquí conociste los valores fundamentales y los principios del Código. A continuación conocerás cómo actuar ante posibles incumplimientos, los canales para comunicar inquietudes y las consecuencias del incumplimiento.",
+ ayuda:"Si tienes dudas sobre la forma correcta de actuar o necesitas comunicar una posible situación de incumplimiento, puedes acudir a las siguientes instancias. Selecciona cada cuadro para conocerlas.",
+ ay1:"Internamente puedes acudir a tu jefe inmediato o a la persona con quien te sientas cómodo para plantear la situación, y al área responsable de Cumplimiento o Recursos Humanos.",
+ ay2:"O cuando corresponda, puedes acudir al contacto de Compras de Roche, al Compliance Officer de Roche o al Canal Speak Up de Roche.",
+ consec:"El cumplimiento de este Código forma parte de los compromisos con Roche. Cuando un proveedor no cumple las expectativas establecidas, deberá implementar de inmediato medidas correctivas debidamente documentadas. En caso de incumplimientos graves, Roche podrá dar por terminada la relación comercial y excluir al proveedor de futuras oportunidades de contratación.",
+ comp:"Por eso contamos contigo. Tu compromiso con estos principios es fundamental. Permite a Roche ofrecer innovaciones médicas a los pacientes con integridad y contribuye a que toda su cadena de valor opere de manera responsable. Juntos podemos impulsar la sostenibilidad, fortalecer la confianza mutua y crear un futuro más saludable para todos. Gracias por formar parte de este compromiso.",
+ recursos:"Has finalizado esta capacitación. Los recursos presentados permanecerán disponibles para consultarlos cuando lo necesites.",
+ esc:"Lee el escenario y responde cómo deberías actuar frente a esta situación.",
+ fbEtica:"“Aceptar cualquier beneficio que pueda influir en una decisión, ya que constituye un riesgo para la integridad y es contrario a las expectativas del Código de Conducta para Proveedores de Roche”.",
+ fbDDHH:"“El Código exige igualdad de oportunidades, cumplimiento de la legislación laboral y respeto por los derechos humanos”.",
+ fbMamb:"“Roche promueve la mejora continua y el compromiso verificable con sus expectativas ambientales”."
+};
+var SLIDES=[
+ {type:"cover",menu:"toc",mod:"gen",k:"bienvenida",title:"Código de Conducta para Proveedores de Roche",meta:["Duración: 30 minutos","Capacitación interna"],img:"cover-illustration.png",imgContain:true,audio:A.bienvenida,gate:"0"},
+ {type:"howto",menu:"toc",mod:"gen",k:"como-realizar",k2:"como-realizar-secuencia",audio2:A.howtoSeq,title:"¿Cómo realizar esta capacitación?",lead:"Observa la secuencia: primero Aprende, luego Analiza y finalmente Decide.",audio:A.howto,gate:"seq"},
+ {type:"toc",menu:"toc",mod:"gen",k:"tabla-contenido",title:"Tabla de Contenido",lead:"Este es el índice del curso. En el menú superior cada módulo se marca con un check al completarlo.",audio:A.toc,gate:"0"},
+ {type:"divider",menu:"intro",mod:"intro",k:"intro",kicker:"Módulo 01",title:"Introducción",lead:"Conocerás por qué Roche cuenta con un Código de Conducta para Proveedores y la importancia de cumplirlo.",img:"personas.jpg",audio:A.introDiv,gate:"0"},
+ {type:"objetivos",menu:"intro",mod:"intro",sec:"obj",k:"objetivos",title:"Objetivos",img:"innovacion.jpg",lead:"Al finalizar esta capacitación:",items:["<strong>Comprenderás</strong> por qué Roche establece un Código de Conducta para sus proveedores.","<strong>Identificarás</strong> los principios y comportamientos esperados durante la prestación de servicios para Roche.","<strong>Aplicarás</strong> estos principios para actuar correctamente frente a las situaciones que puedan presentarse durante el desarrollo de tus funciones."],audio:A.objetivos,gate:"seq"},
+ {type:"pillars",menu:"intro",mod:"intro",sec:"sost",k:"sostenibilidad",title:"Compromiso de Roche con la sostenibilidad",lead:"Haz clic en cada imagen: se desvanecerá y mostrará su contenido. Revisa las tres para continuar.",cards:[{img:"innovacion.jpg",icon:"bulb",h:"Innovación",b:"Contribuir al desarrollo de soluciones que mejoren la salud y la calidad de vida de las personas.",k:"sostenibilidad-innovacion",audio:A.sInnov},{img:"personas.jpg",icon:"people",h:"Personas",b:"Promover un entorno donde todas las personas sean tratadas con respeto, equidad y dignidad.",k:"sostenibilidad-personas",audio:A.sPers},{img:"sostenibilidad-planta.jpg",icon:"leaf",h:"Medio Ambiente",b:"Desarrollar actividades de manera responsable, protegiendo el medio ambiente y usando los recursos de forma sostenible.",k:"sostenibilidad-ambiente",audio:A.sAmb}],audio:A.sost,gate:"seq3"},
+ {type:"qmaster",menu:"intro",mod:"intro",sec:"prov",k:"proveedores",title:"Roche y sus proveedores",img:"proveedores.jpg",lead:"Selecciona cada pregunta para conocer la respuesta. Revisa las cuatro para continuar.",items:[{q:"¿A quién considera Roche como proveedor?",audio:A.q1,k:"proveedores-1",points:["Proveedores","Prestadores de servicios","Fabricantes por contrato"]},{q:"¿Por qué es tan importante nuestra colaboración?",audio:A.q2,k:"proveedores-2",points:["Nuestra colaboración contribuye a un negocio más eficiente y sostenible.","Nuestra colaboración contribuye a que Roche pueda ofrecer innovaciones médicas que beneficien a los pacientes y a la sociedad."]},{q:"¿Qué espera Roche de sus proveedores?",audio:A.q3,k:"proveedores-3",points:["Cumplir las expectativas establecidas en el Código de Conducta para Proveedores de Roche."]},{q:"¿Qué beneficios obtienes al cumplir este Código?",audio:A.q4,k:"proveedores-4",points:["Comprender las expectativas de Roche.","Proteger la reputación de nuestra Organización.","Fortalecer la relación comercial con Roche."]}],audio:A.prov,gate:"seq4"},
+ {type:"divider",menu:"cod",mod:"cod",k:"codigo",kicker:"Módulo 02",title:"Código de Conducta",lead:"Conocerás los valores fundamentales y los siete principios que orientan el comportamiento esperado.",img:"gobernanza.jpg",audio:A.codDiv,gate:"0"},
+ {type:"vmaster",menu:"cod",mod:"cod",sec:"val",k:"valores",title:"Valores fundamentales de Roche",lead:"Selecciona cada valor: se ubicará a la izquierda y su contenido aparecerá a la derecha. Revisa los tres para continuar.",items:[{h:"Cumplimiento",icon:"check",k:"valores-cumplimiento",audio:A.vCumpl,paras:["El cumplimiento del Código de Conducta para Proveedores forma parte de los compromisos asumidos entre Roche y nuestra Organización, y constituye un requisito para participar como proveedor de Roche.","Todos los colaboradores que desarrollan actividades para Roche deben actuar conforme a estos principios.","Los incumplimientos deben corregirse oportunamente y, cuando sean graves, pueden afectar la continuidad de la relación comercial entre Roche y nuestra Organización."]},{h:"Responsabilidad",icon:"hand",k:"valores-responsabilidad",audio:A.vResp,paras:["Nuestra Organización debe promover el cumplimiento de los principios del Código de Conducta para Proveedores de Roche a lo largo de su cadena de suministro.","Esto implica que, cuando corresponda, nuestros proveedores y socios comerciales también desarrollen sus actividades de acuerdo con estos principios."]},{h:"Transparencia",icon:"eye",k:"valores-transparencia",audio:A.vTrans,paras:["Nuestra Organización debe mantener la información y los registros necesarios para demostrar el cumplimiento del Código de Conducta para Proveedores de Roche.","Cuando corresponda, Roche podrá verificar este cumplimiento mediante auditorías, evaluaciones u otros mecanismos establecidos para este fin."]}],audio:A.valores,gate:"seq3"},
+ {type:"hub",menu:"cod",mod:"cod",sec:"prin",k:"principios",title:"Principios del Código de Conducta",lead:"Selecciona cada principio para revisarlo. Al completarlo se marcará con un check y volverás aquí. Completa los siete para continuar.",cards:[{p:"etica",icon:"scale",h:"Ética",b:"Integridad, transparencia y respeto por las normas."},{p:"ddhh",icon:"people",h:"Derechos Humanos y Laborales",b:"Entorno digno, seguro, inclusivo y respetuoso."},{p:"seg",icon:"shield",h:"Seguridad y Salud",b:"Entorno de trabajo seguro y saludable."},{p:"mamb",icon:"leaf",h:"Medio Ambiente",b:"Uso responsable de recursos y menor impacto."},{p:"gob",icon:"gear",h:"Gobernanza y Sistemas de Gestión",b:"Sistemas para implementar los principios."},{p:"pi",icon:"lock",h:"Propiedad Intelectual",b:"Proteger información y activos intangibles."},{p:"se",icon:"chart",h:"Sostenibilidad Económica",b:"Valor económico y social en las comunidades."}],audio:A.principios,gate:"hub"},
+ {type:"acc",menu:"cod",mod:"cod",principle:"etica",k:"etica",kicker:"Principio 1 de 7",title:"Ética",img:"etica.jpg",lead:"Este principio comprende seis temas. Selecciona cada uno. Revisa todos para continuar.",qs:accFrom(ETICA,"etica"),audio:A.etica,gate:"accseq"},
+ {type:"scenario",menu:"cod",mod:"cod",principle:"etica",plast:true,k:"etica-caso",fbk:"etica-feedback",title:"Verificación de la realidad",audio:A.esc,situacion:"Durante la recepción de un lote Roche detectas observaciones en la documentación. Un representante del transportista te ofrece entradas VIP para que registres la recepción sin dejar constancia de la observación.",qn:"¿Cómo deberías actuar?",opts:[{t:"<strong>Acepto</strong> el ofrecimiento.",correct:false},{t:"<strong>Rechazo</strong> el ofrecimiento, registro la observación e informo el hecho.",correct:true},{t:"<strong>Acepto</strong> las entradas y registro la observación.",correct:false},{t:"<strong>Ignoro</strong> el ofrecimiento y continúo con mi trabajo.",correct:false}],fbIcon:"eye",fbTitle:"Tenga cuidado con",fb:A.fbEtica,gate:"scenario"},
+ {type:"acc",menu:"cod",mod:"cod",principle:"ddhh",k:"derechos-humanos",kicker:"Principio 2 de 7",title:"Derechos Humanos y Laborales",img:"derechos-humanos.jpg",lead:"Este principio comprende ocho temas. Selecciona cada uno. Revisa todos para continuar.",qs:accFrom(DDHH,"derechos-humanos"),audio:A.ddhh,gate:"accseq"},
+ {type:"scenario",menu:"cod",mod:"cod",principle:"ddhh",plast:true,k:"derechos-humanos-caso",fbk:"derechos-humanos-feedback",title:"Verificación de la realidad",audio:A.esc,situacion:"Ante la falta de personal, el Director de Producción, Thomas, propone contratar únicamente familiares y pagar un sueldo inferior el primer mes.",qn:"¿Cómo deberías actuar?",opts:[{t:"<strong>Acepto</strong> la propuesta.",correct:false},{t:"<strong>Contrato</strong> solo familiares.",correct:false},{t:"<strong>Solicito</strong> que el proceso respete la legislación laboral y los criterios de selección de la Organización.",correct:true},{t:"<strong>Acepto</strong> el sueldo reducido.",correct:false}],fbIcon:"thumbsup",fbTitle:"Haga lo correcto",fb:A.fbDDHH,gate:"scenario"},
+ {type:"content",menu:"cod",mod:"cod",principle:"seg",plast:true,k:"seguridad-salud",kicker:"Principio 3 de 7",title:"Seguridad y Salud",img:"seguridad-salud.jpg",points:["Seguridad del entorno de trabajo","Protección, salud y bienestar del trabajador","Seguridad de los procesos","Preparación y respuesta ante emergencias"],body:"Roche espera que sus proveedores proporcionen un entorno de trabajo seguro y saludable para todas las personas, gestionando los riesgos de los procesos y contando con planes de preparación y respuesta ante emergencias.",audio:A.seguridad,gate:"0"},
+ {type:"acc",menu:"cod",mod:"cod",principle:"mamb",k:"medio-ambiente",kicker:"Principio 4 de 7",title:"Medio Ambiente",img:"medio-ambiente.jpg",lead:"Este principio comprende siete temas. Selecciona cada uno. Revisa todos para continuar.",qs:accFrom(MAMB,"medio-ambiente"),audio:A.mamb,gate:"accseq"},
+ {type:"scenario",menu:"cod",mod:"cod",principle:"mamb",plast:true,k:"medio-ambiente-caso",fbk:"medio-ambiente-feedback",title:"Verificación de la realidad",audio:A.esc,situacion:"Como responsable de seleccionar una empresa de transporte, observas que ninguna empresa preseleccionada documenta sus emisiones ambientales.",qn:"¿Cómo deberías actuar?",opts:[{t:"<strong>Elijo</strong> la más económica.",correct:false},{t:"<strong>Reinicio</strong> inmediatamente el proceso.",correct:false},{t:"<strong>Solicito</strong> el compromiso formal de medir y reportar sus emisiones.",correct:true}],fbIcon:"thumbsup",fbTitle:"Haga lo correcto",fb:A.fbMamb,gate:"scenario"},
+ {type:"content",menu:"cod",mod:"cod",principle:"gob",plast:true,k:"gobernanza",kicker:"Principio 5 de 7",title:"Gobernanza y Sistemas de Gestión",img:"gobernanza.jpg",points:["Cultura, compromiso y responsabilidad","Requisitos legales y del cliente","Gestión de riesgos","Transparencia y trazabilidad","Capacitación y competencia","Mejora continua","Identificación y notificación de incumplimientos"],body:"Además de cumplir estos principios, Roche espera que sus proveedores cuenten con sistemas de gestión que permitan implementarlos de manera consistente: promover una cultura de cumplimiento, gestionar los riesgos de forma preventiva, mantener procesos transparentes y trazables, asegurar la capacitación del personal, impulsar la mejora continua e identificar y reportar oportunamente cualquier incumplimiento.",audio:A.gobernanza,gate:"0"},
+ {type:"content",menu:"cod",mod:"cod",principle:"pi",plast:true,k:"propiedad-intelectual",kicker:"Principio 6 de 7",title:"Propiedad Intelectual",img:"propiedad-intelectual.jpg",body:"Roche espera que sus proveedores respeten los derechos de propiedad intelectual asociados a sus productos, tecnologías, procesos, marcas y demás activos intangibles. Toda la información confidencial y los secretos comerciales deben protegerse y utilizarse únicamente para los fines autorizados. El uso o divulgación no autorizada puede generar responsabilidades legales y contractuales.",audio:A.propiedad,gate:"0"},
+ {type:"content",menu:"cod",mod:"cod",principle:"se",plast:true,k:"sostenibilidad-economica",kicker:"Principio 7 de 7",title:"Sostenibilidad Económica",img:"sostenibilidad-economica.jpg",body:"Roche espera que sus proveedores contribuyan al desarrollo sostenible de las comunidades donde operan, desarrollando sus actividades de manera responsable, generando valor económico y social, y manteniendo una relación positiva con su entorno. Contribuir a la sostenibilidad de las comunidades donde se desarrollan las actividades..",audio:A.sosteco,gate:"0"},
+ {type:"divider",menu:"cierre",mod:"cierre",k:"cierre",kicker:"Módulo 03",title:"Cierre",lead:"Conocerás cómo actuar ante posibles incumplimientos, los canales para comunicar inquietudes y las consecuencias del incumplimiento.",img:"speakup.png",imgContain:true,audio:A.cierreDiv,gate:"0"},
+ {type:"ayuda",menu:"cierre",mod:"cierre",sec:"ayuda",k:"buscar-ayuda",title:"Buscar ayuda y comunicar inquietudes",img:"speakup.png",lead:"Si tienes dudas sobre la forma correcta de actuar o necesitas comunicar una posible situación de incumplimiento, puedes acudir a: (selecciona cada cuadro).",boxes:[{h:"Internamente",icon:"people",k:"buscar-ayuda-1",audio:A.ay1,items:["Tu jefe inmediato o la persona con quien te sientas cómodo para plantear la situación.","El área responsable de Cumplimiento o Recursos Humanos."]},{h:"O cuando corresponda",icon:"link",k:"buscar-ayuda-2",audio:A.ay2,items:["Contacto de Compras de Roche.","Compliance Officer de Roche.","Canal Speak Up de Roche."],link:{t:"Abrir Canal Speak Up de Roche",u:"https://roche.whispli.com/speak-up?locale=en"}}],audio:A.ayuda,gate:"seq2"},
+ {type:"consec",menu:"cierre",mod:"cierre",sec:"cons",k:"consecuencias",title:"Consecuencias del incumplimiento",lead:"El cumplimiento forma parte de los compromisos asumidos con Roche.",rows:[{icon:"warn",cls:"warn",t:"Cuando un proveedor no cumple las expectativas establecidas por Roche, deberá implementar de inmediato medidas correctivas debidamente documentadas."},{icon:"x",cls:"stop",t:"En caso de incumplimientos graves, Roche podrá dar por terminada la relación comercial y excluir al proveedor de futuras oportunidades de contratación."}],audio:A.consec,gate:"seq"},
+ {type:"compromiso",menu:"cierre",mod:"cierre",sec:"comp",k:"compromiso",title:"Compromiso con Roche",intro:"Por eso contamos contigo. Tu compromiso con estos principios es fundamental.",cards:[{img:"personas.jpg",t:"Permite a Roche ofrecer innovaciones médicas a los pacientes con integridad y contribuye a que toda su cadena de valor opere de manera responsable."},{img:"sostenibilidad-planta.jpg",t:"Juntos, podemos impulsar la sostenibilidad, fortalecer la confianza mutua y crear un futuro más saludable para todos."}],thanks:"Gracias por formar parte de este compromiso.",audio:A.comp,gate:"0"},
+ {type:"recursos",menu:"cierre",mod:"cierre",sec:"rec",k:"recursos",title:"Recursos",lead:"Has finalizado esta capacitación. Estos recursos quedan disponibles para consulta.",links:[{t:"Código de Conducta para Proveedores de Roche",s:"Documento oficial (PDF)",u:"https://assets.roche.com/f/176343/df73575ab9/roche_supplier_code_of_conduct.pdf"},{t:"Canal Speak Up de Roche",s:"Comunicar inquietudes",u:"https://roche.whispli.com/speak-up?locale=en"},{t:"Pharmaceutical Supply Chain Initiative (PSCI)",s:"Iniciativa del sector",u:"https://pscinitiative.org/home"}],audio:A.recursos,gate:"0"}
+];
+var HUB=-1,principleFirst={},principleLast={},navTarget={};
+SLIDES.forEach(function(s,i){if(s.type==='hub'){s.hub=true;HUB=i;}if(s.principle){if(principleFirst[s.principle]===undefined)principleFirst[s.principle]=i;principleLast[s.principle]=i;}if(s.type==='toc')navTarget.toc=i;if(s.type==='divider'&&s.menu==='intro')navTarget.intro=i;if(s.type==='divider'&&s.menu==='cod')navTarget.cod=i;if(s.type==='divider'&&s.menu==='cierre')navTarget.cierre=i;});
+var PRINCIPLES=["etica","ddhh","seg","mamb","gob","pi","se"];
+var principleDone={};PRINCIPLES.forEach(function(p){principleDone[p]=false;});
+function allPrinciplesDone(){return PRINCIPLES.every(function(p){return principleDone[p];});}
+var ICON={
+ bulb:'<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>',
+ people:'<circle cx="9" cy="8" r="3"/><path d="M2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0-1-5.8M22 21a7 7 0 0 0-5-6.7"/>',
+ leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2.5 1.5 5-1 9a7 7 0 0 1-7 9zM9 21c0-4 2-7 6-9"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ hand:'<path d="M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v2M10 10V5a2 2 0 0 0-4 0v9a7 7 0 0 0 14 0v-2a2 2 0 0 0-4 0"/>',
+ eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+ scale:'<path d="M12 3v18M6 21h12M6 8 4 13a3.5 3.5 0 0 0 5 0L7 8zM18 8l-2 5a3.5 3.5 0 0 0 5 0l-2-5zM4 8h16"/>',
+ shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 6.6 19l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.6 12H4a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 5 5.3l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 12 2.6V4a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.6 1.6 0 0 0 21.4 12H21"/>',
+ lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+ chart:'<path d="M3 3v18h18M7 15l3-4 3 3 5-7"/>',
+ warn:'<path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
+ x:'<path d="M18 6 6 18M6 6l12 12"/>',
+ thumbsup:'<path d="M7 10v11M2 12v7a2 2 0 0 0 2 2h13a2 2 0 0 0 2-1.7l1.3-8A1.5 1.5 0 0 0 18.8 9H13V4a2 2 0 0 0-2-2l-4 8"/>',
+ doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+ link:'<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/>',
+ book:'<path d="M12 6c-2-1.3-4.7-2-8-2v14c3.3 0 6 .7 8 2 2-1.3 4.7-2 8-2V4c-3.3 0-6 .7-8 2z"/><path d="M12 6v14"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+ refresh:'<path d="M21 12a9 9 0 1 1-2.6-6.3M21 4v5h-5"/>'
+};
+function svg(n,w){w=w||22;return '<svg width="'+w+'" height="'+w+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ICON[n]||'')+'</svg>';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function mediaHTML(file,contain){var cc=(contain?' contain':'');var st=contain?'style="object-fit:contain"':'';return '<div class="media'+cc+'"><img src="assets/'+file+'" alt="" '+st+' onerror="this.closest(\'.media\').classList.add(\'noimg\')"><span class="phlabel">assets/'+file+'</span></div>';}
+var idx=0,maxReached=0;
+var slideDone=new Array(SLIDES.length).fill(false);
+var secDone={},modDone={intro:false,cod:false,cierre:false};
+Object.keys(MODSECS).forEach(function(k){MODSECS[k].forEach(function(s){secDone[s]=false;});});
+var lastSlideOfSec={};SLIDES.forEach(function(s,i){if(s.sec)lastSlideOfSec[s.sec]=i;});
+var stage=document.getElementById('stage');
+function render(s,i){
+  var el=document.createElement('section');el.className='scene';el.dataset.i=i;
+  var kick=s.kicker?('<span class="kicker">'+s.kicker+'</span>'):'';
+  var head='<h2 class="t">'+s.title+'</h2><div class="tbar"></div>';
+  var inner='';
+  if(s.type==='cover'||s.type==='divider'){
+    var b='<div>'+(s.kicker?'<span class="kicker">'+s.kicker+'</span>':'')+'<h1 class="t">'+s.title+'</h1><div class="tbar" style="background:#7fd3ff"></div>'+(s.lead?'<p class="lead">'+s.lead+'</p>':'');
+    if(s.meta)b+='<div class="meta">'+s.meta.map(function(m,k){var ic=k===0?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5l8 4 8-4v14l-8-4-8 4z"/></svg>';return '<span class="chip">'+ic+' '+m+'</span>';}).join('')+'</div>';
+    b+='</div>';
+    inner='<div class="card hero"><div class="pad">'+(s.img?('<div class="split">'+b+mediaHTML(s.img,s.imgContain)+'</div>'):b)+'</div></div>';
+  }
+  else if(s.type==='howto'){inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:8px">'+s.lead+'</p>'+cycleSVG()+'</div></div>';}
+  else if(s.type==='toc'){inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead">'+s.lead+'</p><div id="tocGrid" style="margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px"></div></div></div>';}
+  else if(s.type==='objetivos'){
+    var body='<div>'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p><div class="seq" data-seq>'+s.items.map(function(t){return '<div class="obj"><span class="ic">'+svg('check',16)+'</span><p>'+t+'</p></div>';}).join('')+'</div></div>';
+    inner='<div class="card"><div class="pad">'+(s.img?('<div class="split">'+body+mediaHTML(s.img)+'</div>'):body)+'</div></div>';
+  }
+  else if(s.type==='pillars'){
+    var grid='<div class="pillars" data-pillars>'+s.cards.map(function(c,k){return '<button class="pill" data-pi="'+k+'"><span class="dtick">'+svg('check',14)+'</span><div class="pf"><img src="assets/'+c.img+'" alt="" onerror="this.style.opacity=0"><span class="hintclick">Toca para ver</span><span class="lab">'+svg(c.icon,20)+' '+c.h+'</span></div><div class="pb"><span class="badge">'+svg(c.icon,22)+'</span><h3>'+c.h+'</h3><p>'+c.b+'</p><span class="re">'+svg('refresh',13)+' Ver imagen</span></div></button>';}).join('')+'</div>';
+    inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:18px">'+s.lead+'</p>'+grid+'</div></div>';
+  }
+  else if(s.type==='acc'){
+    var accHtml='<div class="acc" data-acc>'+s.qs.map(function(qq,k){return '<div class="qrow" data-ai="'+k+'"><div class="head"><span class="q">'+(k+1)+'</span> '+qq.q+'<span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg></span></div><div class="body"><div class="inner">'+qq.a+'</div></div></div>';}).join('')+'</div>';
+    var content='<div>'+kick+head+'<p class="lead" style="margin-bottom:14px">'+s.lead+'</p>'+accHtml+'</div>';
+    inner='<div class="card"><div class="pad">'+(s.img?('<div class="split rev">'+mediaHTML(s.img,s.imgContain)+content+'</div>'):content)+'</div></div>';
+  }
+  else if(s.type==='qmaster'){
+    var list='<div class="qlist" data-qlist>'+s.items.map(function(it,k){return '<button class="qbtn" data-qi="'+k+'"><span class="qi">'+(k+1)+'</span>'+it.q+'<span class="qck">'+svg('check',12)+'</span><span class="chev2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg></span></button>';}).join('')+'</div>';
+    var detail='<div class="qdetail" data-qdetail><div class="qtitle"><span class="qi" data-qdi></span><span data-qdq></span></div><div class="checklist" data-qdlist></div><div class="qbackwrap"><button class="qback" data-qback>‹ Volver a las preguntas</button></div></div>';
+    var content2='<div>'+kick+head+'<p class="lead" data-qlead style="margin-bottom:16px">'+s.lead+'</p>'+list+detail+'</div>';
+    inner='<div class="card"><div class="pad">'+(s.img?('<div class="split rev" data-qsplit>'+mediaHTML(s.img)+content2+'</div>'):content2)+'</div></div>';
+  }
+  else if(s.type==='vmaster'){
+    var vcont='<div class="vcontent" data-vcontent><div class="vph"><span class="vphic">'+svg('scale',24)+'</span></div></div>';
+    var vlist='<div class="vlist" data-vlist>'+s.items.map(function(it,k){return '<button class="vbtn" data-vi="'+k+'"><span class="vic">'+svg(it.icon,18)+'</span>'+it.h+'<span class="vck">'+svg('check',12)+'</span></button>';}).join('')+'</div>';
+    inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p><div class="vmaster">'+vlist+vcont+'</div></div></div>';
+  }
+  else if(s.type==='hub'){
+    var grid='<div class="hubgrid" data-hub>'+s.cards.map(function(c){return '<button class="hubcard" data-p="'+c.p+'"><span class="hic">'+svg(c.icon,22)+'</span><div><h3>'+c.h+'</h3><p>'+c.b+'</p></div><span class="hgo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg></span><span class="hck">'+svg('check',13)+'</span></button>';}).join('')+'</div>';
+    inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p>'+grid+'<div class="hubnote"><span data-hubcount></span></div></div></div>';
+  }
+  else if(s.type==='content'){
+    var pts=s.points?('<div class="seq" style="margin-top:14px">'+s.points.map(function(p){return '<div class="obj in"><span class="ic">'+svg('check',16)+'</span><p>'+p+'</p></div>';}).join('')+'</div>'):'';
+    var c2='<div>'+kick+head+'<p class="body">'+s.body+'</p>'+pts+'</div>';
+    inner='<div class="card"><div class="pad">'+(s.img?('<div class="split">'+c2+mediaHTML(s.img)+'</div>'):c2)+'</div></div>';
+  }
+  else if(s.type==='scenario'){
+    inner='<div class="card"><div class="pad">'+kick+head+'<div class="scnbox"><div class="scngrid"><div class="sit">'+s.situacion+'</div><div class="ans"><div class="qn">'+s.qn+'</div><div class="opts" data-opts>'+s.opts.map(function(o,k){return '<div class="opt" data-correct="'+(o.correct?1:0)+'"><span class="k">'+String.fromCharCode(65+k)+'</span>'+o.t+'</div>';}).join('')+'</div><div style="margin-top:14px"><button class="btn primary" data-submit disabled>Enviar respuesta</button></div><div class="fbstatus" data-fbstatus><span class="fsi" data-fsicon></span><span data-fstext></span></div><div class="fb" data-fb><span class="fbi" data-fbicon></span><div><b data-fbt>'+s.fbTitle+'</b><span data-fbm>&ldquo;'+s.fb+'&rdquo;</span></div></div></div></div></div></div></div>';
+  }
+  else if(s.type==='ayuda'){
+    var shield=mediaHTML(s.img,true);
+    var boxes='<div class="helpgrid" data-help>'+s.boxes.map(function(bx,k){var li=bx.items.map(function(t){return '<li>'+t+'</li>';}).join('');var lk=bx.link?('<div style="margin-top:12px"><a class="btn primary" style="text-decoration:none;font-size:13px;padding:9px 15px" href="'+bx.link.u+'" target="_blank" rel="noopener">'+svg('link',15)+' '+bx.link.t+'</a></div>'):'';return '<div class="helpcard" data-hi="'+k+'"><div class="hh"><span class="hhi">'+svg(bx.icon,18)+'</span>'+bx.h+'<span class="hhck">'+svg('check',12)+'</span></div><div class="helpteaser">Toca para ver ›</div><div class="hbody"><div class="hin"><ul>'+li+'</ul>'+lk+'</div></div></div>';}).join('')+'</div>';
+    var content='<div>'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p>'+boxes+'</div>';
+    inner='<div class="card"><div class="pad"><div class="split rev">'+shield+content+'</div></div></div>';
+  }
+  else if(s.type==='consec'){
+    var rows='<div class="conseq" data-seq>'+s.rows.map(function(r){return '<div class="conrow '+r.cls+'"><span class="cic">'+svg(r.icon,30)+'</span><p>'+r.t+'</p></div>';}).join('')+'</div>';
+    inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p>'+rows+'</div></div>';
+  }
+  else if(s.type==='compromiso'){
+    var cards='<div class="commit-grid">'+s.cards.map(function(c){return '<div class="commit-card"><span class="cim"><img src="assets/'+c.img+'" alt="" onerror="this.style.display=\'none\'"></span><p>'+c.t+'</p></div>';}).join('')+'</div>';
+    inner='<div class="card"><div class="pad">'+kick+head+'<div class="commit-intro">'+s.intro+'</div>'+cards+'<div class="commit-thanks">'+s.thanks+'</div></div></div>';
+  }
+  else if(s.type==='recursos'){
+    var links='<div class="reslist">'+s.links.map(function(l){return '<a class="reslink" href="'+l.u+'" target="_blank" rel="noopener"><span class="ic">'+svg('doc',18)+'</span><span>'+l.t+'<small>'+l.s+'</small></span><span class="go">'+svg('link',16)+'</span></a>';}).join('')+'</div>';
+    var cert='<div class="certcard"><img src="assets/certificado-badge.png" alt="" onerror="this.style.display=\'none\'"><div><h3 style="margin:0 0 4px;font-size:17px">Descarga tu Certificado de Capacitación</h3><p style="margin:0 0 12px;font-size:13.5px;color:var(--muted)">Genera tu constancia de participación.</p><button class="btn good" id="certBtn">'+svg('doc',16)+' Descargar certificado</button> <div id="scormMsg" style="font-size:12px;color:var(--muted);margin-top:8px"></div></div></div>';
+    inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p><div class="resgrid">'+links+cert+'</div></div></div>';
+  }
+  el.innerHTML=inner;return el;
+}
+function cycleSVG(){
+  var col='var(--theme)';
+  function node(id,cx,cy,num,label,desc,img){return '<g class="cnode" id="cn-'+id+'" transform="translate('+cx+','+cy+')"><clipPath id="cl-'+id+'"><circle r="49"/></clipPath><circle r="52" fill="#fff" stroke="'+col+'" stroke-width="3"/><image href="assets/'+img+'" xlink:href="assets/'+img+'" x="-49" y="-49" width="98" height="98" clip-path="url(#cl-'+id+')" preserveAspectRatio="xMidYMid slice"/><circle cx="-41" cy="-41" r="16" fill="#13284b"/><text x="-41" y="-35" text-anchor="middle" font-size="17" font-weight="800" fill="#fff">'+num+'</text><foreignObject x="-95" y="60" width="190" height="96"><div xmlns="http://www.w3.org/1999/xhtml" class="cyc-cap" style="text-align:center"><b>'+label+'</b><br>'+desc+'</div></foreignObject></g>';}
+  var nodes=node('aprende',470,120,'1','Aprende','Revisa los principios y recomendaciones presentadas.','howto-aprende.png')+node('analiza',150,120,'2','Analiza','Identifica situaciones similares a las que pueden presentarse.','howto-analiza.png')+node('decide',310,330,'3','Decide','Selecciona la opción que consideres correcta.','howto-decide.png');
+  var arrows='<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="'+col+'"/></marker></defs><path class="carrow" id="ca-1" d="M416,104 Q310,44 204,104" fill="none" stroke="'+col+'" stroke-width="3.5" marker-end="url(#ah)"/><path class="carrow" id="ca-2" d="M150,172 Q150,286 258,322" fill="none" stroke="'+col+'" stroke-width="3.5" marker-end="url(#ah)"/><path class="carrow" id="ca-3" d="M362,322 Q472,286 472,172" fill="none" stroke="'+col+'" stroke-width="3.5" marker-end="url(#ah)"/>';
+  return '<div class="cycle"><svg viewBox="0 0 620 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">'+arrows+nodes+'</svg></div>';
+}
+SLIDES.forEach(function(s,i){stage.appendChild(render(s,i));});
+var scenes=Array.prototype.slice.call(stage.querySelectorAll('.scene'));
+/* ===== MENÚ + TEMA ===== */
+function buildMenu(){var c=document.getElementById('mitems');c.innerHTML='';MENU.forEach(function(m){var d=document.createElement('div');d.className='mitem nav';d.dataset.key=m.key;d.dataset.mod=m.mod;d.style.setProperty('--am',TH[m.mod].c);d.innerHTML='<span class="mc">'+svg('check',11)+'</span><span class="lbltxt">'+m.full+'</span><span class="mabbr">'+m.abbr+'</span><span class="lock">'+svg('lock',13)+'</span>';d.addEventListener('click',function(){var t=navTarget[m.key];if(t===undefined)return;if(!RESTRICT||t<=maxReached)show(t);});c.appendChild(d);});}
+function refreshMenu(){var cur=SLIDES[idx].menu;document.querySelectorAll('.mitem').forEach(function(d){var k=d.dataset.key,t=navTarget[k];d.classList.toggle('active',k===cur);var done=(k==='intro'&&modDone.intro)||(k==='cod'&&modDone.cod)||(k==='cierre'&&modDone.cierre)||(k==='toc'&&slideDone[navTarget.toc]);d.classList.toggle('done',!!done);d.classList.toggle('locked',RESTRICT&&!(t<=maxReached));});}
+function applyTheme(mod){var t=TH[mod]||TH.gen;var r=document.documentElement.style;r.setProperty('--theme',t.c);r.setProperty('--theme-soft',t.s);document.getElementById('band').style.background='linear-gradient(90deg,'+t.c+','+t.c+'88)';}
+
+/* ===== REPRODUCTOR (MP3 con respaldo de voz + bloqueo de 1ª vez) ===== */
+var AU=new Audio();AU.preload='auto';var _primer=new Audio('data:audio/wav;base64,UklGRqQCAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YYACAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA');_primer.preload='auto';var RESTRICT=false;var _primed=false,AC=null,GAIN=null,bufCache={},curSrc=null,startedAt=0;function ensureAC(){if(AC)return AC;try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();GAIN=AC.createGain();GAIN.gain.value=1;GAIN.connect(AC.destination);}catch(e){AC=null;}return AC;}function primeAudio(){if(!_primed){_primed=true;try{_primer.volume=0.001;var pp=_primer.play();if(pp&&pp.catch)pp.catch(function(){});}catch(e){}}try{var ac=ensureAC();if(ac){if(ac.state==='suspended')ac.resume();var b=ac.createBuffer(1,1,22050),sN=ac.createBufferSource();sN.buffer=b;sN.connect(ac.destination);try{sN.start(0);}catch(e){}}}catch(e){}}var synth=window.speechSynthesis||null,audioUnlocked=false,heard={},TOK=0;
+function pickVoice(){if(!synth)return null;var v=synth.getVoices();return v.find(function(x){return /es(-|_)/i.test(x.lang);})||v.find(function(x){return /^es/i.test(x.lang);})||null;}
+if(synth)synth.onvoiceschanged=pickVoice;
+var P={key:'',text:'',mode:'',playing:false,vol:1,ccOn:false,onEnd:null,est:3,startRatio:0,startTime:0,raf:null,offset:0,len:0,words:[],pendingPlay:false,decided:false,ended:false};
+var playBtn=document.getElementById('playBtn'),seek=document.getElementById('seek'),seekFill=document.getElementById('seekFill'),knob=document.getElementById('knob'),tCur=document.getElementById('tCur'),tTot=document.getElementById('tTot'),volEl=document.getElementById('vol'),volBtn=document.getElementById('volBtn'),ccBtn=document.getElementById('ccBtn'),transcript=document.getElementById('transcript'),transcriptText=document.getElementById('transcriptText'),lockBadge=document.getElementById('lockBadge');
+var ICON_PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',ICON_PAUSE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+function setPlayIcon(p){playBtn.innerHTML=p?ICON_PAUSE:ICON_PLAY;}
+function fmt(t){t=Math.max(0,Math.round(t));var m=Math.floor(t/60),s=t%60;return m+':'+(s<10?'0':'')+s;}
+function volIcon(){var v=P.vol;var p=v===0?'<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/>':v<0.5?'<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/>':'<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/>';volBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+function splitWords(t){var a=[],re=/\S+\s*/g,m;while((m=re.exec(t))!==null){a.push({w:m[0],start:m.index,end:m.index+m[0].length});}return a;}
+function buildTranscript(){P.words=splitWords(P.text);transcriptText.innerHTML=P.words.map(function(o,i){return '<span class="w" data-i="'+i+'">'+esc(o.w)+'</span>';}).join('');}
+function renderProgress(r){r=Math.max(0,Math.min(1,r));if(P.onTick)P.onTick(r);seekFill.style.width=(r*100)+'%';knob.style.left=(r*100)+'%';tCur.textContent=fmt(r*P.est);var pos=r*P.len,ai=-1;for(var i=0;i<P.words.length;i++){if(pos>=P.words[i].start&&pos<P.words[i].end){ai=i;break;}if(pos>=P.words[i].start)ai=i;}var sp=transcriptText.children;for(var j=0;j<sp.length;j++){sp[j].classList.toggle('act',j===ai);}}
+function isHeard(){return !!heard[P.key];}
+function updateSeekLock(){var locked=RESTRICT&&!isHeard();seek.classList.toggle('locked',locked);lockBadge.classList.toggle('show',locked);}
+function wordSnap(pos){var b=0;for(var i=0;i<P.words.length;i++){if(P.words[i].start<=pos)b=P.words[i].start;else break;}return b;}
+function prepare(key,text,onEnd){
+  stopPlayback(true);
+  TOK++;var my=TOK;
+  P.key=key||'';P.text=text||'';P.onEnd=onEnd||null;P.mode='';P.decided=false;P.ended=false;P.pendingPlay=false;P.len=P.text.length;P.offset=0;P.startRatio=0;P.buffer=null;P.onTick=null;
+  var wc=(P.text.match(/\S+/g)||[]).length;P.est=Math.max(3,wc/2.5);
+  buildTranscript();renderProgress(0);tTot.textContent=fmt(P.est);setPlayIcon(false);updateSeekLock();playBtn.disabled=!P.text;
+  var C=window.AudioContext||window.webkitAudioContext;
+  if(P.key&&C){
+    if(bufCache[P.key]){P.buffer=bufCache[P.key];P.mode='webaudio';P.est=P.buffer.duration;P.decided=true;tTot.textContent=fmt(P.est);if(P.pendingPlay){P.pendingPlay=false;startWeb(0);}return;}
+    loadArrayBuffer('audio/'+encodeURIComponent(P.key)+'.mp3',function(ab){if(my!==TOK)return;var ac=ensureAC();if(!ac){prepareHTML(my);return;}var fired=false;var okf=function(buf){if(fired||my!==TOK)return;fired=true;bufCache[P.key]=buf;P.buffer=buf;P.mode='webaudio';P.est=buf.duration;P.decided=true;tTot.textContent=fmt(buf.duration);renderProgress(0);if(P.pendingPlay){P.pendingPlay=false;startWeb(0);}};var erf=function(){if(fired)return;fired=true;if(my===TOK)prepareHTML(my);};try{var pr=ac.decodeAudioData(ab,okf,erf);if(pr&&pr.then)pr.then(okf).catch(erf);}catch(e){erf();}},function(){if(my!==TOK)return;prepareHTML(my);});
+    return;
+  }
+  if(P.key){prepareHTML(my);return;}
+  try{AU.removeAttribute('src');AU.load();}catch(e){}P.decided=true;P.mode='tts';
+}
+function loadArrayBuffer(url,ok,fail){try{var x=new XMLHttpRequest();x.open('GET',url,true);x.responseType='arraybuffer';x.onload=function(){if(x.response&&((x.status>=200&&x.status<300)||x.status===0))ok(x.response);else fail();};x.onerror=function(){fail();};x.send();}catch(e){fail();}}
+function prepareHTML(my){
+  try{AU.pause();}catch(e){}try{AU.currentTime=0;}catch(e){}AU.preload='auto';
+  var decide=function(){if(my!==TOK||P.decided)return;P.decided=true;P.mode='audio';var d=(isFinite(AU.duration)&&AU.duration>0)?AU.duration:P.est;P.est=d;tTot.textContent=fmt(d);renderProgress(0);if(P.pendingPlay){P.pendingPlay=false;startAudio();}};
+  AU.onloadeddata=decide;AU.oncanplay=decide;AU.onloadedmetadata=decide;
+  AU.ondurationchange=function(){if(isFinite(AU.duration)&&AU.duration>0){P.est=AU.duration;if(P.decided&&P.mode==='audio')tTot.textContent=fmt(AU.duration);}};
+  AU.onerror=function(){if(my!==TOK||P.decided)return;P.decided=true;P.mode='tts';tTot.textContent=fmt(P.est);if(P.pendingPlay){P.pendingPlay=false;startTTS(0);}};
+  AU.onended=function(){if(my!==TOK)return;onPlaybackEnd();};
+  AU.src='audio/'+encodeURIComponent(P.key)+'.mp3';try{AU.load();}catch(e){}
+}
+function startWeb(offset){var ac=ensureAC();if(!ac||!P.buffer)return;P.offset=Math.max(0,Math.min(offset||0,P.buffer.duration-0.01));P.mode='webaudio';P.ended=false;P.playing=true;setPlayIcon(true);var my=TOK;var begin=function(){if(TOK!==my||!P.playing)return;try{if(curSrc){curSrc._stop=true;curSrc.stop();}}catch(e){}var node=ac.createBufferSource();node.buffer=P.buffer;GAIN.gain.value=P.vol;node.connect(GAIN);curSrc=node;node._stop=false;node.onended=function(){if(TOK!==my||node._stop)return;onPlaybackEnd();};startedAt=ac.currentTime-P.offset;try{node.start(0,P.offset);}catch(e){}loopWeb();};if(ac.state==='suspended'){var pr=ac.resume();if(pr&&pr.then){pr.then(begin).catch(begin);}else{begin();}}else{begin();}}
+function loopWeb(){if(!P.playing||P.mode!=='webaudio')return;var pos=AC.currentTime-startedAt;var r=P.buffer?pos/P.buffer.duration:0;renderProgress(Math.min(1,r));if(r<1)P.raf=requestAnimationFrame(loopWeb);}
+function pauseWeb(){if(AC&&P.buffer)P.offset=Math.max(0,Math.min(AC.currentTime-startedAt,P.buffer.duration));try{if(curSrc){curSrc._stop=true;curSrc.stop();}}catch(e){}P.playing=false;setPlayIcon(false);if(P.raf)cancelAnimationFrame(P.raf);}
+function startAudio(){P.ended=false;P.playing=true;setPlayIcon(true);AU.volume=P.vol;try{if(AU.ended||AU.currentTime>=(AU.duration||0))AU.currentTime=0;}catch(e){}var my=TOK;function go(){if(TOK!==my||!P.playing)return;AU.oncanplaythrough=null;var pr=AU.play();if(pr&&pr.then){pr.then(function(){if(TOK===my&&AU.currentTime<0.05){/*ok*/}}).catch(function(){});}loopAudio();}if(AU.readyState>=4){go();}else{AU.oncanplaythrough=go;setTimeout(go,2000);}}
+function loopAudio(){if(!P.playing||P.mode!=='audio')return;var d=(isFinite(AU.duration)&&AU.duration>0)?AU.duration:P.est;var r=d?AU.currentTime/d:0;renderProgress(r);P.raf=requestAnimationFrame(loopAudio);}
+function startTTS(pos){P.ended=false;P.playing=true;setPlayIcon(true);P.offset=pos||0;P.startRatio=P.offset/Math.max(1,P.len);P.startTime=performance.now();if(synth){try{synth.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(P.text.slice(P.offset));u.lang='es-ES';u.rate=1;u.volume=P.vol;var v=pickVoice();if(v)u.voice=v;P._u=u;try{synth.speak(u);}catch(e){}}loopTTS();}
+function loopTTS(){if(!P.playing||P.mode!=='tts')return;var el=(performance.now()-P.startTime)/1000;var r=P.startRatio+el/Math.max(0.1,P.est);if(r>=1){renderProgress(1);onPlaybackEnd();return;}renderProgress(r);P.raf=requestAnimationFrame(loopTTS);}
+function pausePlayback(){if(P.mode==='webaudio'){pauseWeb();return;}if(P.mode==='audio'){try{AU.pause();}catch(e){}}else if(synth){try{synth.cancel();}catch(e){}var el=(performance.now()-P.startTime)/1000;var r=Math.min(0.999,P.startRatio+el/Math.max(0.1,P.est));P.offset=wordSnap(r*P.len);}P.playing=false;setPlayIcon(false);if(P.raf)cancelAnimationFrame(P.raf);}
+function stopPlayback(silent){try{if(curSrc){curSrc._stop=true;curSrc.stop();}}catch(e){}try{AU.pause();}catch(e){}if(synth){try{synth.cancel();}catch(e){}}P.playing=false;if(P.raf)cancelAnimationFrame(P.raf);if(!silent)setPlayIcon(false);}
+function onPlaybackEnd(){if(P.ended)return;P.ended=true;P.playing=false;setPlayIcon(false);if(P.raf)cancelAnimationFrame(P.raf);renderProgress(1);P.offset=0;P.onTick=null;heard[P.key]=true;updateSeekLock();if(SLIDES[idx]&&P.key===SLIDES[idx].k){var _sc=scenes[idx];if(_sc)_sc.classList.remove("introlock");}tryComplete(idx);var cb=P.onEnd;P.onEnd=null;if(cb)setTimeout(cb,220);}
+function play(){audioUnlocked=true;primeAudio();if(P.playing){pausePlayback();return;}if(!P.decided){P.pendingPlay=true;return;}P.ended=false;if(P.mode==='webaudio')startWeb(P.offset);else if(P.mode==='audio')startAudio();else startTTS(P.offset);}
+function speak(key,text,onEnd){prepare(key,text,onEnd);play();}
+playBtn.addEventListener('click',play);setPlayIcon(false);volIcon();
+function seekTo(x){if(RESTRICT&&!isHeard())return;var r0=seek.getBoundingClientRect();var r=(x-r0.left)/r0.width;r=Math.max(0,Math.min(1,r));if(P.mode==='webaudio'){P.offset=r*(P.buffer?P.buffer.duration:P.est);if(P.playing)startWeb(P.offset);else renderProgress(r);}else if(P.mode==='audio'){try{AU.currentTime=r*(AU.duration||0);}catch(e){}renderProgress(r);}else{P.offset=wordSnap(r*P.len);if(P.playing){startTTS(P.offset);}else{P.startRatio=P.offset/Math.max(1,P.len);renderProgress(r);}}}
+var seeking=false;seek.addEventListener('mousedown',function(e){if(RESTRICT&&!isHeard())return;seeking=true;seekTo(e.clientX);});window.addEventListener('mousemove',function(e){if(seeking)seekTo(e.clientX);});window.addEventListener('mouseup',function(){seeking=false;});seek.addEventListener('touchstart',function(e){seekTo(e.touches[0].clientX);},{passive:true});seek.addEventListener('touchmove',function(e){seekTo(e.touches[0].clientX);},{passive:true});
+var volTimer=null;volEl.addEventListener('input',function(){P.vol=parseInt(volEl.value,10)/100;volIcon();if(P.mode==='webaudio'){if(GAIN)GAIN.gain.value=P.vol;}else if(P.mode==='audio'){AU.volume=P.vol;}else if(P.playing){clearTimeout(volTimer);volTimer=setTimeout(function(){var el=(performance.now()-P.startTime)/1000;var r=Math.min(0.999,P.startRatio+el/Math.max(0.1,P.est));startTTS(wordSnap(r*P.len));},220);}});
+volBtn.addEventListener('click',function(){if(P.vol>0){P._prev=P.vol;P.vol=0;volEl.value=0;}else{P.vol=P._prev||1;volEl.value=Math.round(P.vol*100);}volIcon();if(P.mode==='webaudio'){if(GAIN)GAIN.gain.value=P.vol;}else if(P.mode==='audio'){AU.volume=P.vol;}else if(P.playing){var el=(performance.now()-P.startTime)/1000;var r=Math.min(0.999,P.startRatio+el/Math.max(0.1,P.est));startTTS(wordSnap(r*P.len));}});
+ccBtn.addEventListener('click',function(){P.ccOn=!P.ccOn;transcript.classList.toggle('on',P.ccOn);ccBtn.classList.toggle('on',P.ccOn);});
+/* ===== INTERACCIONES (con auto-avance secuencial) ===== */
+function wire(scene,i){
+  if(scene.dataset.wired)return;scene.dataset.wired='1';var s=SLIDES[i];
+  if(s.type==='pillars')wirePillars(scene,i,s);
+  if(s.type==='acc')wireAcc(scene,i,s);
+  if(s.type==='qmaster')wireQMaster(scene,i,s);
+  if(s.type==='vmaster')wireVMaster(scene,i,s);
+  if(s.type==='ayuda')wireHelp(scene,i,s);
+  if(s.type==='hub')wireHub(scene,i);
+  if(s.type==='scenario')wireScenario(scene,i,s);
+  if(s.type==='toc')buildTOC(scene);
+  var cb=scene.querySelector('#certBtn');if(cb)cb.addEventListener('click',genCert);
+}
+function nextUnheard(keys){for(var k=0;k<keys.length;k++){if(!heard[keys[k]])return k;}return -1;}
+function audioKeys(i){var s=SLIDES[i];if(s.type==='howto')return s.k2?[s.k,s.k2]:[s.k];if(s.type==='pillars')return s.cards.map(function(c){return c.k;});if(s.type==='qmaster'||s.type==='vmaster')return s.items.map(function(it){return it.k;});if(s.type==='acc')return s.qs.map(function(q){return q.k;});if(s.type==='ayuda')return s.boxes.map(function(b){return b.k;});return s.audio?[s.k]:[];}
+function audiosHeard(i){return audioKeys(i).every(function(k){return heard[k];});}
+function tryComplete(i){if(i==null||i<0)return;if(!slideDone[i]&&isReady(i)){markSlide(i);}else if(i===idx){refreshNav();}}
+function wirePillars(scene,i,s){
+  var pills=scene.querySelectorAll('.pill'),keys=s.cards.map(function(c){return c.k;});
+  function openP(k){var p=pills[k];if(!p)return;p.classList.add('open');speak(s.cards[k].k,s.cards[k].audio,function(){p.classList.add('done');});}
+  pills.forEach(function(p){var k=parseInt(p.dataset.pi,10);if(heard[keys[k]])p.classList.add('done');p.addEventListener('click',function(){openP(k);});});
+  scene.querySelectorAll('.pill .re').forEach(function(r){r.addEventListener('click',function(e){e.stopPropagation();r.closest('.pill').classList.remove('open');stopPlayback();});});
+}
+function wireAcc(scene,i,s){
+  var rows=scene.querySelectorAll('[data-acc] .qrow'),keys=s.qs.map(function(q){return q.k;});
+  function openR(k){var row=rows[k];if(!row)return;rows.forEach(function(r){r.classList.remove('open');});row.classList.add('open');var q=s.qs[k];speak(q.k,row.querySelector('.head').textContent.trim()+'. '+row.querySelector('.inner').textContent.trim(),null);row.scrollIntoView({block:'nearest'});}
+  rows.forEach(function(row){row.querySelector('.head').addEventListener('click',function(e){if(e.target.closest('a'))return;var k=parseInt(row.dataset.ai,10);if(row.classList.contains('open')){row.classList.remove('open');stopPlayback();return;}openR(k);});});
+}
+function qmToList(scene){var d=scene.querySelector('[data-qdetail]');if(!d)return;d.classList.remove('on');var l=scene.querySelector('[data-qlist]');if(l)l.style.display='';var ld=scene.querySelector('[data-qlead]');if(ld)ld.style.display='';}
+function wireQMaster(scene,i,s){
+  var listEl=scene.querySelector('[data-qlist]'),detail=scene.querySelector('[data-qdetail]'),lead=scene.querySelector('[data-qlead]'),btns=scene.querySelectorAll('.qbtn'),keys=s.items.map(function(it){return it.k;});
+  function openI(k){var it=s.items[k];scene.querySelector('[data-qdi]').textContent=(k+1);scene.querySelector('[data-qdq]').textContent=it.q;scene.querySelector('[data-qdlist]').innerHTML=it.points.map(function(p,ix){return '<div class="ci" style="animation-delay:'+(ix*0.12)+'s"><span class="ck">'+svg('check',16)+'</span><p>'+p+'</p></div>';}).join('');listEl.style.display='none';if(lead)lead.style.display='none';detail.classList.add('on');speak(it.k,it.audio,function(){btns[k].classList.add('seen');qmToList(scene);});}
+  btns.forEach(function(b){var k=parseInt(b.dataset.qi,10);if(heard[keys[k]])b.classList.add('seen');b.addEventListener('click',function(){openI(k);});});
+  scene.querySelector('[data-qback]').addEventListener('click',function(){qmToList(scene);stopPlayback();});
+}
+function wireVMaster(scene,i,s){
+  var cont=scene.querySelector('[data-vcontent]'),btns=scene.querySelectorAll('.vbtn'),keys=s.items.map(function(it){return it.k;});
+  function openV(k){var it=s.items[k];btns.forEach(function(x){x.classList.remove('active');});btns[k].classList.add('active');cont.classList.remove('fade');void cont.offsetWidth;cont.classList.add('fade');cont.innerHTML='<h3><span class="vi">'+svg(it.icon,18)+'</span>'+it.h+'</h3>'+it.paras.map(function(p){return '<p>'+p+'</p>';}).join('');speak(it.k,it.audio,function(){btns[k].classList.add('seen');});}
+  btns.forEach(function(b){var k=parseInt(b.dataset.vi,10);if(heard[keys[k]])b.classList.add('seen');b.addEventListener('click',function(){openV(k);});});
+}
+function wireHelp(scene,i,s){
+  var cards=scene.querySelectorAll('.helpcard'),keys=s.boxes.map(function(b){return b.k;});
+  function openB(k){var c=cards[k];if(!c)return;c.classList.add('open');speak(s.boxes[k].k,s.boxes[k].audio,function(){var nx=nextUnheard(keys);if(nx>=0)openB(nx);});}
+  cards.forEach(function(c){c.addEventListener('click',function(e){if(e.target.closest('a'))return;openB(parseInt(c.dataset.hi,10));});});
+}
+function wireScenario(scene,i,s){
+  var opts=scene.querySelectorAll('[data-opts] .opt'),submit=scene.querySelector('[data-submit]'),fb=scene.querySelector('[data-fb]'),sel=null;
+  opts.forEach(function(o){o.addEventListener('click',function(){if(o.classList.contains('locked'))return;opts.forEach(function(x){x.classList.remove('sel');});o.classList.add('sel');sel=o;submit.disabled=false;});});
+  submit.addEventListener('click',function(){if(!sel)return;opts.forEach(function(o){o.classList.add('locked');if(o.dataset.correct==='1')o.classList.add('correct');});var ok=sel.dataset.correct==='1';if(!ok)sel.classList.add('wrong');var st=scene.querySelector('[data-fbstatus]');st.classList.remove('ok','no');st.classList.add('show');st.classList.add(ok?'ok':'no');st.querySelector('[data-fsicon]').innerHTML=svg(ok?'check':'x',13);st.querySelector('[data-fstext]').textContent=ok?'Tu respuesta fue correcta':'Tu respuesta fue incorrecta';fb.classList.remove('ok','no');fb.classList.add('show');fb.classList.add(ok?'ok':'no');scene.querySelector('[data-fbicon]').innerHTML=svg(s.fbIcon||'eye',22);scene.querySelector('[data-fbt]').textContent=s.fbTitle;scene.querySelector('[data-fbm]').textContent='\u201c'+s.fb+'\u201d';var audioMsg=ok?('Tu manera de actuar fue la correcta. De lo contrario, '+s.fbTitle+' \u201c'+s.fb+'\u201d.'):(s.fbTitle+' \u201c'+s.fb+'\u201d.');submit.style.display='none';if(ok){speak(s.k+'-correcta',audioMsg,null);}else{speak(s.fbk,audioMsg,null);}markSlide(i);});
+}
+function wireHub(scene,i){scene.querySelectorAll('.hubcard').forEach(function(c){c.addEventListener('click',function(){var p=c.dataset.p;var t=principleFirst[p];if(t!==undefined)show(t);});});refreshHub(scene);}
+function refreshHub(scene){scene=scene||scenes[HUB];if(!scene)return;scene.querySelectorAll('.hubcard').forEach(function(c){c.classList.toggle('done',!!principleDone[c.dataset.p]);});var n=PRINCIPLES.filter(function(p){return principleDone[p];}).length;var el=scene.querySelector('[data-hubcount]');if(el)el.innerHTML='<b>'+n+' de 7</b> principios completados'+(n===7?' — puedes continuar.':'.');}
+/* ===== CHECKS ===== */
+function markSlide(i){slideDone[i]=true;var s=SLIDES[i];if(s.sec&&lastSlideOfSec[s.sec]===i)secDone[s.sec]=true;if(s.plast&&s.principle){principleDone[s.principle]=true;if(allPrinciplesDone())secDone.prin=true;refreshHub();}Object.keys(MODSECS).forEach(function(k){if(MODSECS[k].every(function(x){return secDone[x];}))modDone[k]=true;});if(i===idx)refreshNav();refreshMenu();refreshTOC();updateOverall();}
+function updateOverall(){var pct=Math.round(slideDone.filter(Boolean).length/SLIDES.length*100);document.getElementById('cprogFill').style.width=pct+'%';if(window.SCORM)SCORM.setProgress(pct);}
+/* ===== TOC ===== */
+function buildTOC(scene){var g=scene.querySelector('#tocGrid');if(!g)return;var groups=[{k:'intro',n:'01',t:'Introducción',secs:[['obj','Objetivos'],['sost','Compromiso de Roche con la sostenibilidad'],['prov','Roche y sus proveedores']]},{k:'cod',n:'02',t:'Código de Conducta',secs:[['val','Valores fundamentales de Roche'],['prin','Principios del Código de Conducta']],sub:['Ética','Derechos Humanos y Laborales','Seguridad y Salud','Medio Ambiente','Gobernanza y Sistemas de Gestión','Propiedad Intelectual','Sostenibilidad Económica']},{k:'cierre',n:'03',t:'Cierre',secs:[['ayuda','Buscar ayuda y comunicar inquietudes'],['cons','Consecuencias del incumplimiento'],['comp','Compromiso con Roche'],['rec','Recursos']]}];g.innerHTML=groups.map(function(gr){var secs=gr.secs.map(function(sc){var extra='';if(sc[0]==='prin'&&gr.sub){extra='<div style="margin:6px 0 2px 26px;display:grid;gap:5px">'+gr.sub.map(function(name){return '<div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)"><span style="width:6px;height:6px;border-radius:50%;background:'+TH[gr.k].c+';flex:0 0 auto"></span>'+name+'</div>';}).join('')+'</div>';}return '<div class="toc-sec" data-sec="'+sc[0]+'" style="display:flex;gap:9px;align-items:center;font-size:13px;color:var(--muted);font-weight:600"><span class="tocdot" style="width:17px;height:17px;border-radius:50%;border:1.5px solid #c3d3ec;display:grid;place-items:center;flex:0 0 auto"></span>'+sc[1]+'</div>'+extra;}).join('');return '<div class="card" style="box-shadow:none;border-color:var(--line)"><div style="padding:18px"><span style="width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:800;background:'+TH[gr.k].c+'">'+gr.n+'</span><h3 style="margin:10px 0 8px;font-size:16px">'+gr.t+'</h3><div style="display:grid;gap:6px">'+secs+'</div></div></div>';}).join('');refreshTOC();}
+function refreshTOC(){document.querySelectorAll('.toc-sec').forEach(function(r){var d=r.querySelector('.tocdot');if(secDone[r.dataset.sec]){d.style.background='var(--good)';d.style.borderColor='var(--good)';d.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';}});}
+/* ===== CERTIFICADO ===== */
+function genCert(){var name=(window.SCORM&&SCORM.studentName())||'Participante';var cv=document.createElement('canvas');cv.width=1200;cv.height=850;var x=cv.getContext('2d');x.fillStyle='#0c1b33';x.fillRect(0,0,1200,850);x.fillStyle='#13284b';x.fillRect(40,40,1120,770);x.strokeStyle='#5FA83D';x.lineWidth=4;x.strokeRect(60,60,1080,730);x.textAlign='center';x.fillStyle='#fff';x.font='bold 30px Arial';x.fillText('CERTIFICADO DE PARTICIPACIÓN',600,175);x.fillStyle='#9fb6dd';x.font='16px Arial';x.fillText('Se otorga el presente certificado a',600,265);x.fillStyle='#fff';x.font='bold 46px Georgia';x.fillText(name,600,335);x.fillStyle='#9fb6dd';x.font='16px Arial';x.fillText('por completar la capacitación',600,405);x.fillStyle='#7fd3ff';x.font='bold 26px Arial';x.fillText('Código de Conducta para Proveedores de Roche',600,455);x.fillStyle='#9fb6dd';x.font='15px Arial';var d=new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'});x.fillText('Fecha de finalización: '+d,600,555);x.fillStyle='#5FA83D';x.beginPath();x.arc(600,655,42,0,7);x.fill();x.strokeStyle='#fff';x.lineWidth=6;x.beginPath();x.moveTo(582,655);x.lineTo(596,670);x.lineTo(620,640);x.stroke();x.fillStyle='#6b7ea0';x.font='13px Arial';x.fillText('Capacitación interna · Proveedor de Roche',600,755);var a=document.createElement('a');a.download='Certificado_Codigo_Conducta_Roche.png';a.href=cv.toDataURL('image/png');a.click();}
+/* ===== NAVEGACIÓN ===== */
+function gateType(i){return SLIDES[i].gate||'0';}
+function isReady(i){if(!RESTRICT)return true;var s=SLIDES[i];if(s.hub)return allPrinciplesDone();if(s.type==='scenario')return !!slideDone[i]&&(!s.audio||!!heard[s.k]);return audiosHeard(i);}
+function nextIndex(cur){var s=SLIDES[cur];if(s.hub)return(!RESTRICT||allPrinciplesDone())?navTarget.cierre:-1;if(s.plast)return HUB;if(s.principle)return cur+1;var n=cur+1;return n<SLIDES.length?n:-1;}
+function prevIndex(cur){var s=SLIDES[cur];if(s.principle)return cur===principleFirst[s.principle]?HUB:cur-1;if(s.hub)return cur-1;if(cur>0&&SLIDES[cur-1].principle)return HUB;return cur-1;}
+function runSequence(scene,i){var items=scene.querySelectorAll('[data-seq] > *');items.forEach(function(el){el.classList.remove('in');});items.forEach(function(el,k){setTimeout(function(){if(scenes[idx]===scene)el.classList.add('in');},300+k*600);});}
+var CYCSEQ=[['cn-aprende'],['ca-1','cn-analiza'],['ca-2','cn-decide'],['ca-3']];
+function cycleReveal(scene,k){var g=CYCSEQ[k];if(!g)return;g.forEach(function(id){var e=scene.querySelector('#'+id);if(e)e.classList.add('in');});}
+function resetCycle(scene,i){var s=SLIDES[i],all=scene.querySelectorAll('.cnode,.carrow');if(s.k2&&heard[s.k2]){all.forEach(function(e){e.classList.add('in');});}else{all.forEach(function(e){e.classList.remove('in');});}}
+function runCycleSync(scene,i){var s=SLIDES[i];if(!s.k2||scenes[idx]!==scene)return;var txt=s.audio2||'',L=Math.max(1,txt.length);
+  var cues=['Aprende','Analiza','Decide'].map(function(w){var q=txt.indexOf(w);return q<0?1:q/L;});
+  scene.querySelectorAll('.cnode,.carrow').forEach(function(e){e.classList.remove('in');});
+  var done=[false,false,false];function rev(k){if(done[k])return;done[k]=true;cycleReveal(scene,k);}
+  speak(s.k2,txt,function(){P.onTick=null;rev(0);rev(1);rev(2);cycleReveal(scene,3);});
+  P.onTick=function(r){for(var k=0;k<3;k++){if(r>=cues[k])rev(k);}};}
+function show(i){
+  stopPlayback();idx=i;if(i>maxReached)maxReached=i;var s=SLIDES[i];applyTheme(s.mod);
+  scenes.forEach(function(sc,k){sc.classList.toggle('active',k===i);});
+  wire(scenes[i],i);if(s.hub)refreshHub(scenes[i]);if(s.type==='qmaster')qmToList(scenes[i]);
+  prepare(s.k,s.audio||'',(s.type==='howto'&&s.k2)?function(){runCycleSync(scenes[i],i);}:null);
+  var _LK=['pillars','qmaster','vmaster','acc','ayuda','scenario','hub'];
+  scenes[i].classList.toggle('introlock',RESTRICT&&_LK.indexOf(s.type)>=0&&!!s.audio&&!heard[s.k]&&audioUnlocked);
+  if(s.type==='howto'){resetCycle(scenes[i],i);}
+  else if(gateType(i)==='seq'){runSequence(scenes[i],i);}
+  if(audioUnlocked&&s.audio)play();
+  document.getElementById('sceneLabel').textContent='Escena '+(i+1)+' de '+SLIDES.length;
+  refreshMenu();refreshNav();updateOverall();scenes[i].scrollTop=0;
+  if(s.type==='recursos'){if(window.SCORM){SCORM.complete();}var sm=document.getElementById('scormMsg');if(sm)sm.textContent=(window.SCORM&&SCORM.isConnected())?'✓ Progreso enviado al LMS.':'';}
+}
+function refreshNav(){var prev=document.getElementById('prevBtn'),next=document.getElementById('nextBtn');var pi=prevIndex(idx);prev.disabled=(pi<0||idx===0);var ready=isReady(idx),ni=nextIndex(idx),last=(SLIDES[idx].type==='recursos');next.disabled=last||ni<0||!ready;next.style.visibility=last?'hidden':'visible';var hint=document.getElementById('hint'),ht=document.getElementById('hintTxt');if(!ready&&!last){var sc=SLIDES[idx],msg;if(scenes[idx]&&scenes[idx].classList.contains('introlock'))msg='Escucha la introducción para habilitar las opciones';else if(sc.hub)msg='Completa los 7 principios para continuar';else if(sc.type==='scenario')msg='Responde el escenario para continuar';else if(['pillars','qmaster','vmaster','acc','ayuda'].indexOf(sc.type)>=0)msg='Escucha el audio de cada elemento para continuar';else msg='Escucha el audio completo para continuar';ht.textContent=msg;hint.classList.add('show');}else hint.classList.remove('show');if(SLIDES[idx].type==='cover')next.innerHTML='Comenzar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>';else if(!last)next.innerHTML='Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>';}
+document.getElementById('nextBtn').addEventListener('click',function(){audioUnlocked=true;if(this.disabled)return;var ni=nextIndex(idx);if(ni>=0)show(ni);});
+document.getElementById('prevBtn').addEventListener('click',function(){var pi=prevIndex(idx);if(pi>=0)show(pi);});
+document.addEventListener('keydown',function(e){if(e.target.closest('input,textarea'))return;var n=document.getElementById('nextBtn'),p=document.getElementById('prevBtn');if(e.key==='ArrowRight'&&!n.disabled)n.click();if(e.key==='ArrowLeft'&&!p.disabled)p.click();if(e.key===' '){e.preventDefault();play();}});
+buildMenu();show(0);
+</script>
+</body>
+</html>
