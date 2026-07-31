@@ -38,9 +38,10 @@
   .mitem.nav:not(.locked):not(.active):hover{background:#f4f7fc;color:var(--ink)}
   .band{height:8px;background:linear-gradient(90deg,var(--theme),color-mix(in srgb,var(--theme) 55%,#fff));flex:0 0 auto;transition:background .35s}
   .stage{flex:1 1 auto;position:relative;min-height:0}
-  .scene{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .38s,transform .38s}
+  .scene{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .38s,transform .38s}
   .scene.active{opacity:1;visibility:visible;transform:none}
-  .panel{margin:0 auto;width:100%;max-width:1120px;min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:12px clamp(14px,2.6vw,30px) 16px;position:relative;z-index:1}
+  .fitwrap{width:100%;transform-origin:top center;will-change:transform}
+  .panel{margin:0 auto;width:100%;max-width:1120px;min-height:100%;display:flex;flex-direction:column;justify-content:center;transform-origin:top center;will-change:transform;padding:12px clamp(14px,2.6vw,30px) 16px;position:relative;z-index:1}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
   .pad{padding:clamp(14px,2vw,24px) clamp(18px,2.4vw,34px)}
   .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--theme);background:var(--theme-soft);padding:7px 13px;border-radius:99px;margin-bottom:14px}
@@ -453,7 +454,7 @@ function render(s,i){
     var cert='<div class="certcard"><img src="assets/certificado-badge.png" alt="" onerror="this.style.display=\'none\'"><div><h3 style="margin:0 0 4px;font-size:17px">Descarga tu Certificado de Capacitación</h3><p style="margin:0 0 12px;font-size:13.5px;color:var(--muted)">Genera tu constancia de participación.</p><button class="btn good" id="certBtn">'+svg('doc',16)+' Descargar certificado</button> <div id="scormMsg" style="font-size:12px;color:var(--muted);margin-top:8px"></div></div></div>';
     inner='<div class="card"><div class="pad">'+kick+head+'<p class="lead" style="margin-bottom:16px">'+s.lead+'</p><div class="resgrid">'+links+cert+'</div></div></div>';
   }
-  el.innerHTML=inner;return el;
+  el.innerHTML='<div class="fitwrap">'+inner+'</div>';return el;
 }
 function cycleSVG(){
   var col='var(--theme)';
@@ -603,6 +604,10 @@ function runCycleSync(scene,i){var s=SLIDES[i];if(!s.k2||scenes[idx]!==scene)ret
   var done=[false,false,false];function rev(k){if(done[k])return;done[k]=true;cycleReveal(scene,k);}
   speak(s.k2,txt,function(){P.onTick=null;rev(0);rev(1);rev(2);cycleReveal(scene,3);});
   P.onTick=function(r){for(var k=0;k<3;k++){if(r>=cues[k])rev(k);}};}
+var _RO=(window.ResizeObserver)?new ResizeObserver(function(){fitScene();}):null;
+function fitScene(sc){sc=sc||scenes[idx];if(!sc)return;var p=sc.querySelector('.fitwrap');if(!p)return;p.style.transform='none';var avail=sc.clientHeight,need=p.scrollHeight;if(avail>0&&need>avail+1){var f=Math.max(0.5,avail/need);p.style.transform='scale('+f+')';}else{p.style.transform='none';}}
+function watchFit(sc){if(!_RO||!sc)return;try{_RO.disconnect();var p=sc.querySelector('.fitwrap');if(p)_RO.observe(p);}catch(e){}}
+window.addEventListener('resize',function(){fitScene();});
 function show(i){
   stopPlayback();idx=i;if(i>maxReached)maxReached=i;var s=SLIDES[i];applyTheme(s.mod);
   scenes.forEach(function(sc,k){sc.classList.toggle('active',k===i);});
@@ -614,7 +619,7 @@ function show(i){
   else if(gateType(i)==='seq'){runSequence(scenes[i],i);}
   if(audioUnlocked&&s.audio&&!(s.type==='hub'&&heard[s.k]))play();
   document.getElementById('sceneLabel').textContent='Escena '+(i+1)+' de '+SLIDES.length;
-  refreshMenu();refreshNav();updateOverall();scenes[i].scrollTop=0;
+  refreshMenu();refreshNav();updateOverall();scenes[i].scrollTop=0;watchFit(scenes[i]);fitScene(scenes[i]);requestAnimationFrame(function(){fitScene(scenes[i]);});setTimeout(function(){if(idx===i)fitScene(scenes[i]);},400);setTimeout(function(){if(idx===i)fitScene(scenes[i]);},1200);
   if(s.type==='recursos'){if(window.SCORM){SCORM.complete();}var sm=document.getElementById('scormMsg');if(sm)sm.textContent=(window.SCORM&&SCORM.isConnected())?'✓ Progreso enviado al LMS.':'';}
 }
 function refreshNav(){var prev=document.getElementById('prevBtn'),next=document.getElementById('nextBtn');var pi=prevIndex(idx);prev.disabled=(pi<0||idx===0);var ready=isReady(idx),ni=nextIndex(idx),last=(SLIDES[idx].type==='recursos');next.disabled=last||ni<0||!ready;next.style.visibility=last?'hidden':'visible';var hint=document.getElementById('hint'),ht=document.getElementById('hintTxt');if(!ready&&!last){var sc=SLIDES[idx],msg;if(scenes[idx]&&scenes[idx].classList.contains('introlock'))msg='Escucha la introducción para habilitar las opciones';else if(sc.hub)msg='Completa los 7 principios para continuar';else if(sc.type==='scenario')msg='Responde el escenario para continuar';else if(['pillars','qmaster','vmaster','acc','ayuda'].indexOf(sc.type)>=0)msg='Escucha el audio de cada elemento para continuar';else msg='Escucha el audio completo para continuar';ht.textContent=msg;hint.classList.add('show');}else hint.classList.remove('show');if(SLIDES[idx].type==='cover')next.innerHTML='Comenzar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>';else if(!last)next.innerHTML='Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>';}
